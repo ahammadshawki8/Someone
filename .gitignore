@@ -1,0 +1,23 @@
+# Lens Studio generated
+Cache/
+*.lsproj.bak
+*.esproj.bak
+
+# Node / tooling
+node_modules/
+.npm/
+
+# Video pipeline renders (raw, large)
+video/out/
+video/raw/
+*.blend1
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Local Claude settings
+.claude/settings.local.json

@@ -380,8 +380,9 @@ Four equally weighted criteria. **Tie-break order: Design first**, then Technica
 
 ## 13. Current Status
 
-- **Phase:** Tier 0 (setup) mostly done.
-- **Done (2026-10-20):** idea locked; name locked; Lens Studio 5.24.1 installed (`C:\Program Files\Snap Inc\Lens Studio\Lens Studio.exe`, EULA accepted with owner permission); private repo https://github.com/ahammadshawki8/Someone created; skill pack installed (`.agents/skills/plan-lens`, symlinked to `.claude/skills`); CLAD plugin `ls-clad@ls-extensions` installed at project scope; plan-lens answer sheet at `.notes/plan-lens-answers.md`.
-- **Blocker:** no `.esproj` yet. Templates download inside the app, so the owner must click: Lens Studio home > SPECS > Base Template > File > Save As into this folder.
-- **Next action:** After the `.esproj` exists here: restart Claude Code in this folder with Lens Studio open, approve the `lens-studio` MCP, verify with `/mcp`, commit the Lens Studio project, then run `plan-lens` (Tier 1).
+- **Phase:** Tier 0 (setup) done except the in-agent MCP check.
+- **Done (2026-10-20):** idea locked; name locked; Lens Studio 5.24.1 installed (`C:\Program Files\Snap Inc\Lens Studio\Lens Studio.exe`, EULA accepted with owner permission); private repo https://github.com/ahammadshawki8/Someone created; skill pack installed (`.agents/skills/plan-lens`, symlinked to `.claude/skills`); CLAD plugin `ls-clad@ls-extensions` installed at project scope; plan-lens answer sheet at `.notes/plan-lens-answers.md`; SPECS Base Template project saved and committed.
+- **Layout decision:** the Lens Studio project lives in the nested folder `Someone\Someone\` (with `Someone.esproj`, Lens Studio's own `.mcp.json`, `AGENTS.md`, `.gitignore`). Kept nested because Lens Studio manages those files while the project is open. The plan-lens skill and the plugin `settings.json` are copied into `Someone\Someone\.claude\`. This repo-root `CLAUDE.md` still loads because Claude Code reads parent folders.
+- **Start Claude Code in:** `C:\Users\Shawki\Desktop\Specs\Someone\Someone` (Lens Studio open first). The MCP server (`localhost:50040/mcp`) answered an initialize probe on 2026-10-20.
+- **Next action:** in a session started in `Someone\Someone`, verify the `lens-studio` MCP lists scene objects (Tier 0 done), then run `plan-lens` (Tier 1).
 - **Open questions:** final closing tagline (current: *In a crowd, everyone waits. You won't.*); voiceover by owner or TTS; verify 37% stat primary source.

@@ -17,6 +17,10 @@
 9. **One spatial moment, done perfectly.** The compression moment is the product. Every other feature serves it. Polish beats breadth.
 10. **Every done criterion needs a LEAF test.** If it cannot be tested in the preview, it is not a done criterion.
 11. **Keep this file current.** At the end of every session, update `## Current Status` and `## Decision Log`.
+12. **Full autonomy.** Claude owns this project end to end. Do everything yourself first. Only interrupt the owner when something is truly impossible (UI clicks you cannot make, no interface to the software, legal/permission decisions, UAC prompts). Batch unavoidable asks into one message with exact steps. Maintain the repo `ahammadshawki8/Someone` throughout (commit and push after every meaningful step).
+13. **Premium design only.** Every UI must be professional, paid-studio quality, inspired by real professional designers. Never generic, never "AI slop" (no decorative gradients, no random glows, no emoji UI, no default fonts without intent). Follow the design direction in section 5b.
+14. **Repo visibility.** The repo is **private** during development. It must be made **public** before submission (hackathon requirement).
+15. **plan-lens is learner-led.** The skill interviews the owner one question at a time and must not invent answers. Owner answers using `.notes/plan-lens-answers.md` (gitignored prep sheet).
 
 ---
 
@@ -98,6 +102,14 @@ Someone is an augmented reality Lens for Snap SPECS that turns a frozen bystande
 13. **Accessibility**: captions for every audio cue, haptic-style visual pulse for hard-of-hearing users, left/right-hand option.
 14. **Comfort**: all content 0.6 to 1.6 m away, slightly below eye level, no dark-only visuals (black renders transparent).
 15. **Real-hardware path (not in done criteria, "feel unproven")**: hand-tracking wrist displacement to estimate compression depth (target 5 to 6 cm), voice commands ("call 911"), real ASR captions of the dispatcher.
+
+### 5b. Design direction
+- **Mood:** calm, clinical, premium. The opposite of an alarm. References: Apple Health / Emergency SOS clarity, Teenage Engineering restraint, Dieter Rams "less but better".
+- **Additive display rules:** black is transparent, so no dark panels. Light, luminous elements on the world.
+- **Palette:** pulse coral-red `#FF5A4E` (the heartbeat, used only for the ring and target), on-pace mint `#5CF2B5`, caution amber `#FFC24D`, text warm white `#F7F5F2`. Nothing else.
+- **Type:** one clean grotesk (Inter or the SPECS UI Kit default), large sizes, sentence case, short verbs ("Push here.", "Faster.").
+- **Motion:** slow eases for UI (300 to 500 ms), the ring pulse is the only rhythmic motion. No bounces, no pops.
+- **Hierarchy:** one instruction at a time. Status lives small and peripheral.
 
 ---
 
@@ -368,8 +380,8 @@ Four equally weighted criteria. **Tie-break order: Design first**, then Technica
 
 ## 13. Current Status
 
-- **Phase:** Tier 0 (setup) not started.
-- **Done:** idea researched, judged, locked; name locked; this file written.
-- **Blocker:** no Lens Studio SPECS project (`.esproj`) in this folder yet.
-- **Next action:** Owner creates SPECS Base Template project in Lens Studio and saves it into this folder, opens Lens Studio, restarts Claude Code here, installs CLAD + skill pack, then runs `plan-lens` (answers in sections 3 to 5 and 7).
+- **Phase:** Tier 0 (setup) mostly done.
+- **Done (2026-10-20):** idea locked; name locked; Lens Studio 5.24.1 installed (`C:\Program Files\Snap Inc\Lens Studio\Lens Studio.exe`, EULA accepted with owner permission); private repo https://github.com/ahammadshawki8/Someone created; skill pack installed (`.agents/skills/plan-lens`, symlinked to `.claude/skills`); CLAD plugin `ls-clad@ls-extensions` installed at project scope; plan-lens answer sheet at `.notes/plan-lens-answers.md`.
+- **Blocker:** no `.esproj` yet. Templates download inside the app, so the owner must click: Lens Studio home > SPECS > Base Template > File > Save As into this folder.
+- **Next action:** After the `.esproj` exists here: restart Claude Code in this folder with Lens Studio open, approve the `lens-studio` MCP, verify with `/mcp`, commit the Lens Studio project, then run `plan-lens` (Tier 1).
 - **Open questions:** final closing tagline (current: *In a crowd, everyone waits. You won't.*); voiceover by owner or TTS; verify 37% stat primary source.

@@ -21,3 +21,6 @@ desktop.ini
 
 # Local Claude settings
 .claude/settings.local.json
+
+# Private prep notes
+.notes/

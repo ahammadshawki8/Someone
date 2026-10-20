@@ -375,14 +375,15 @@ Four equally weighted criteria. **Tie-break order: Design first**, then Technica
 | 2026-10-20 | Name locked: **Someone** | Bystander effect: everyone waits for "someone". Rejected: Four Minutes, Unfreeze, Push, Beatkeeper, Thump, Restart (medically inaccurate) |
 | 2026-10-20 | Rejected tagline "Nobody should freeze alone" | Reads as "come freeze with me" |
 | 2026-10-20 | Video uses only own renders, own recordings, free-license stock | Rules forbid unlicensed third-party material |
+| 2026-10-20 | Design brief approved (`Someone/devpost/design-brief.md`) | plan-lens interview complete; 5 done criteria locked |
+| 2026-10-20 | Demo AED arrives 25 s after "Sent"; timed prompts queue behind an unanswered prompt | Avoids AED colliding with the 1:05 demo swap; guarantees one card at a time |
 
 ---
 
 ## 13. Current Status
 
-- **Phase:** Tier 0 (setup) done except the in-agent MCP check.
-- **Done (2026-10-20):** idea locked; name locked; Lens Studio 5.24.1 installed (`C:\Program Files\Snap Inc\Lens Studio\Lens Studio.exe`, EULA accepted with owner permission); private repo https://github.com/ahammadshawki8/Someone created; skill pack installed (`.agents/skills/plan-lens`, symlinked to `.claude/skills`); CLAD plugin `ls-clad@ls-extensions` installed at project scope; plan-lens answer sheet at `.notes/plan-lens-answers.md`; SPECS Base Template project saved and committed.
-- **Layout decision:** the Lens Studio project lives in the nested folder `Someone\Someone\` (with `Someone.esproj`, Lens Studio's own `.mcp.json`, `AGENTS.md`, `.gitignore`). Kept nested because Lens Studio manages those files while the project is open. The plan-lens skill and the plugin `settings.json` are copied into `Someone\Someone\.claude\`. This repo-root `CLAUDE.md` still loads because Claude Code reads parent folders.
-- **Start Claude Code in:** `C:\Users\Shawki\Desktop\Specs\Someone\Someone` (Lens Studio open first). The MCP server (`localhost:50040/mcp`) answered an initialize probe on 2026-10-20.
-- **Next action:** in a session started in `Someone\Someone`, verify the `lens-studio` MCP lists scene objects (Tier 0 done), then run `plan-lens` (Tier 1).
+- **Phase:** Tier 1 (plan) done. Next is Tier 2 (MVP core moment) via CLAD.
+- **Done (2026-10-20):** Tier 0 setup (idea, name, Lens Studio 5.24.1, private repo, skill pack, CLAD plugin `ls-clad`, SPECS Base Template project). `lens-studio` MCP verified: the scene lists 118 objects (roots: Camera Object, Lighting, SpectaclesInteractionKit). `.virtual-scene*.json` is gitignored. Tier 1: plan-lens interview finished and `Someone/devpost/design-brief.md` is `status: approved`.
+- **Layout:** the Lens Studio project lives in `Someone\Someone\` (`Someone.esproj`, Lens Studio's `.mcp.json`, `AGENTS.md`, `devpost/`). Start Claude Code there with Lens Studio open first.
+- **Next action:** in a fresh chat in `Someone\Someone`, paste: "Read devpost/design-brief.md and build it for SPECS. Follow the brief closely. Get the basic flow working first, then add detail. Write and run LEAF tests for each done criterion, and tell me which pass." Build the compression moment first (done criteria 1 and 2), commit after each tier.
 - **Open questions:** final closing tagline (current: *In a crowd, everyone waits. You won't.*); voiceover by owner or TTS; verify 37% stat primary source.

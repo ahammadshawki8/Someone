@@ -2,13 +2,13 @@
  * SomeoneVictimAnimator - dynamic anatomical animation and responsiveness
  * for the patient/victim figure in the rescue scene.
  *
- * Provides physical feedback to rescuer actions:
+ * Supports both high-fidelity rigged anatomical body mesh (Body_Mesh_With_Skeleton)
+ * and legacy stand-in figure:
  *   1. Breathing motion in "Collapse" state (shallow/agonal respiratory movement).
  *   2. Realistic 4-5 cm chest deflection and elastic recoil on each CPR compression.
- *   3. Thoracic shock recoil gently transmitting to head/neck posture.
- *   4. Open-airway head tilt posture during compression phases.
- *   5. Signs of life (ROSC recovery gasp) on successful rescue / paramedic arrival.
- *   6. "Real Victim Mode": cleanly hides the 3D dummy mesh when filming with
+ *   3. Open-airway head tilt posture during compression phases.
+ *   4. Signs of life (ROSC recovery gasp) on successful rescue / paramedic arrival.
+ *   5. "Real Victim Mode": cleanly hides the 3D dummy mesh when filming with
  *      a real human actor, letting AR guides overlay directly onto the real person.
  */
 import {SomeoneTweens} from "./SomeoneTween"
@@ -33,7 +33,7 @@ export class SomeoneVictimAnimator extends BaseScriptComponent {
   private figureRoot: SceneObject | null = null
   private torso: SceneObject | null = null
   private head: SceneObject | null = null
-  private torsoBasePos: vec3 = new vec3(12, 11, 0)
+  private basePos: vec3 = new vec3(87, 8, 0)
   private headBaseRot: quat = quat.quatIdentity()
   private isBreathing: boolean = false
   private breathingTimer: number = 0
@@ -46,14 +46,16 @@ export class SomeoneVictimAnimator extends BaseScriptComponent {
   }
 
   private initFigure(): void {
-    this.figureRoot = this.findChild(this.sceneObject, "VictimFigure_StandIn")
+    this.figureRoot =
+      this.findChild(this.sceneObject, "Body_Mesh_With_Skeleton_A_Pose") ||
+      this.findChild(this.sceneObject, "VictimFigure_StandIn")
+
     if (this.figureRoot) {
       this.torso = this.findChild(this.figureRoot, "Torso")
-      this.head = this.findChild(this.figureRoot, "Head")
+      this.head = this.findChild(this.figureRoot, "Character1_Head") || this.findChild(this.figureRoot, "Head")
 
-      if (this.torso) {
-        this.torsoBasePos = this.torso.getTransform().getLocalPosition()
-      }
+      this.basePos = this.figureRoot.getTransform().getLocalPosition()
+
       if (this.head) {
         this.headBaseRot = this.head.getTransform().getLocalRotation()
       }
@@ -111,11 +113,17 @@ export class SomeoneVictimAnimator extends BaseScriptComponent {
     const targetDeg = open ? -22 : -14
     const currentEuler = this.head.getTransform().getLocalRotation().toEulerAngles()
     const fromDeg = currentEuler.z * (180 / Math.PI)
-    this.tweens.run("airway_tilt", 0.5, (t) => {
-      if (!this.head) return
-      const angle = fromDeg + (targetDeg - fromDeg) * t
-      this.head.getTransform().setLocalRotation(quat.fromEulerVec(new vec3(0, 0, angle * (Math.PI / 180))))
-    }, undefined, "ease-out-sine")
+    this.tweens.run(
+      "airway_tilt",
+      0.5,
+      (t) => {
+        if (!this.head) return
+        const angle = fromDeg + (targetDeg - fromDeg) * t
+        this.head.getTransform().setLocalRotation(quat.fromEulerVec(new vec3(0, 0, angle * (Math.PI / 180))))
+      },
+      undefined,
+      "ease-out-sine"
+    )
   }
 
   /** Signs of life recovery gasp (ROSC) when CPR succeeds / Help arrives. */
@@ -124,9 +132,9 @@ export class SomeoneVictimAnimator extends BaseScriptComponent {
       "recovery_gasp",
       0.8,
       (t) => {
-        // Torso deep inhalation (+2.5 cm)
-        this.compressionOffset = 2.5 * Math.sin(t * Math.PI)
-        this.headNodOffset = -4.0 * Math.sin(t * Math.PI)
+        // Deep inhalation (+2.0 cm)
+        this.compressionOffset = 2.0 * Math.sin(t * Math.PI)
+        this.headNodOffset = -3.0 * Math.sin(t * Math.PI)
       },
       () => {
         this.compressionOffset = 0
@@ -166,10 +174,10 @@ export class SomeoneVictimAnimator extends BaseScriptComponent {
       breathingY = Math.sin(this.breathingTimer) * 0.7
     }
 
-    if (this.torso) {
-      const totalY = this.torsoBasePos.y + this.compressionOffset + breathingY
-      const current = this.torso.getTransform().getLocalPosition()
-      this.torso.getTransform().setLocalPosition(new vec3(current.x, totalY, current.z))
+    if (this.figureRoot) {
+      const totalY = this.basePos.y + this.compressionOffset + breathingY
+      const current = this.figureRoot.getTransform().getLocalPosition()
+      this.figureRoot.getTransform().setLocalPosition(new vec3(current.x, totalY, current.z))
     }
 
     if (this.head && this.headNodOffset !== 0) {

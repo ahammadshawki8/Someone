@@ -1,0 +1,66 @@
+- !<AssetImportMetadata/96cdcf14-61f3-4fcd-b18e-3ed938115573>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 121c1f7f-9e6b-43ac-9974-db424e98fe7f
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 121c1f7f-9e6b-43ac-9974-db424e98fe7f
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 3617197a-d4c3-4be7-adc1-9725080ad412
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/3617197a-d4c3-4be7-adc1-9725080ad412>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 8dcb8be6-1df4-4df0-9a2c-f579f8101cc5
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    badgeColor: false
+    buttonWidthCm: false
+    cardWidthCm: false
+    fadeSeconds: false
+    instructionTextSize: false
+    textColor: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - cardWidthCm: !<float> 34.000000
+      instructionTextSize: !<float> 120.000000
+      buttonWidthCm: !<float> 16.000000
+      textColor: !<Vec4> {x: 0.969000, y: 0.961000, z: 0.949000, w: 1.000000}
+      badgeColor: !<Vec4> {x: 0.361000, y: 0.949000, z: 0.710000, w: 1.000000}
+      fadeSeconds: 0.400000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">SomeoneInstructionCardUI - the one instruction card</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float cardWidthCm = 34 {"hint":"Card width in cm. Long lines wrap inside it.", "widget":"slider", "min":20, "max":44, "step":1}'
+    - '// @input float instructionTextSize = 120 {"hint":"Text size of the one instruction line (em-square units, 120 is about 2.7 cm).", "widget":"slider", "min":70, "max":160, "step":1}'
+    - '// @input float buttonWidthCm = 16 {"hint":"Width of the step button in cm (8 cm minimum for an easy pinch).", "widget":"slider", "min":8, "max":24, "step":0.5}'
+    - '// @input vec4 textColor = "{0.969,0.961,0.949,1}" {"hint":"Instruction and button text color (warm white #F7F5F2).", "widget":"color"}'
+    - '// @input vec4 badgeColor = "{0.361,0.949,0.71,1}" {"hint":"Dispatcher badge color (mint #5CF2B5).", "widget":"color"}'
+    - '// @input float fadeSeconds = 0.4 {"hint":"Seconds for each fade (design range 0.3 to 0.5).", "widget":"slider", "min":0.3, "max":0.5, "step":0.05}'
+    - '// @ui {"widget":"group_end"}'

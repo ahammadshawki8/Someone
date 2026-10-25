@@ -1,0 +1,54 @@
+- !<AssetImportMetadata/0912cfb8-f0ff-4f2d-a794-0bbed1fa05bc>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 1996bf2f-c6a2-44f4-9b70-b684d67b3be9
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 1996bf2f-c6a2-44f4-9b70-b684d67b3be9
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 06ff89ca-e6d6-4f81-a563-fcdde8367e2f
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/06ff89ca-e6d6-4f81-a563-fcdde8367e2f>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 44c06683-ddf3-4448-ae4f-2968305b13cc
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    fadeSeconds: false
+    textColor: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - textColor: !<Vec4> {x: 0.969000, y: 0.961000, z: 0.949000, w: 0.850000}
+      fadeSeconds: 0.450000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">SomeoneClockChipUI - time since collapse</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input vec4 textColor = "{0.969,0.961,0.949,0.85}" {"hint":"Chip text color (warm white, slightly dimmed so it stays peripheral).", "widget":"color"}'
+    - '// @input float fadeSeconds = 0.45 {"hint":"Seconds for the show and hide fade (design range 0.3 to 0.5).", "widget":"slider", "min":0.3, "max":0.5, "step":0.05}'
+    - '// @ui {"widget":"group_end"}'

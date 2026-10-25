@@ -1,0 +1,100 @@
+- !<AssetImportMetadata/d4a46db1-e2de-4c42-99d2-97b8664e71a5>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> b20fd025-a734-4067-851f-05c6f05073ba
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> b20fd025-a734-4067-851f-05c6f05073ba
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> ca978080-61dc-49a5-9444-c59eedeedecb
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/ca978080-61dc-49a5-9444-c59eedeedecb>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: eb5fa7f6-4d5c-40a2-b1c9-a55a1af6cbdf
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    aedPads: false
+    aedWayfinder: false
+    chestDistanceCm: false
+    chestTarget: false
+    clockChip: false
+    cueVolume: false
+    demoMode: false
+    dispatcher: false
+    eyeHeightAboveFloorCm: false
+    instructionCard: false
+    metronome: false
+    paceRing: false
+    placeInFrontOfUser: false
+    rateCue: false
+    replay: false
+    rescueSpace: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - rescueSpace: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      instructionCard: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      rateCue: !<MappingBased.AssignableType_2> 00000000-0000-0000-0000-000000000000
+      clockChip: !<MappingBased.AssignableType_3> 00000000-0000-0000-0000-000000000000
+      replay: !<MappingBased.AssignableType_4> 00000000-0000-0000-0000-000000000000
+      chestTarget: !<MappingBased.AssignableType_5> 00000000-0000-0000-0000-000000000000
+      paceRing: !<MappingBased.AssignableType_6> 00000000-0000-0000-0000-000000000000
+      metronome: !<MappingBased.AssignableType_7> 00000000-0000-0000-0000-000000000000
+      aedWayfinder: !<MappingBased.AssignableType_8> 00000000-0000-0000-0000-000000000000
+      aedPads: !<MappingBased.AssignableType_9> 00000000-0000-0000-0000-000000000000
+      dispatcher: !<MappingBased.AssignableType_10> 00000000-0000-0000-0000-000000000000
+      demoMode: false
+      placeInFrontOfUser: true
+      chestDistanceCm: !<float> 85.000000
+      eyeHeightAboveFloorCm: !<float> 75.000000
+      cueVolume: 0.600000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">SomeoneMain - rescue flow orchestrator</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">References</span>"}'
+    - '// @ui {"widget":"group_start", "label":"References"}'
+    - '// @input SceneObject rescueSpace {"hint":"Root of the rescue space (figure, target, ring, cards). Moved in front of the user at start."}'
+    - '// @input AssignableType_1 instructionCard {"hint":"The one instruction card."}'
+    - '// @input AssignableType_2 rateCue {"hint":"Pace cue word beside the ring."}'
+    - '// @input AssignableType_3 clockChip {"hint":"Time since collapse chip."}'
+    - '// @input AssignableType_4 replay {"hint":"End-of-rescue replay."}'
+    - '// @input AssignableType_5 chestTarget {"hint":"Chest target (pinch = one compression)."}'
+    - '// @input AssignableType_6 paceRing {"hint":"Pace ring around the target."}'
+    - '// @input AssignableType_7 metronome {"hint":"Spatial metronome at the chest."}'
+    - '// @input AssignableType_8 aedWayfinder {"hint":"AED edge arrow and directional chime."}'
+    - '// @input AssignableType_9 aedPads {"hint":"AED pad placement overlay."}'
+    - '// @input AssignableType_10 dispatcher {"hint":"Scripted dispatcher captions (stand-in)."}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input bool demoMode {"hint":"Shorter timers for the video: AED 0:45, swap 1:05, AED arrives 25 s after Sent, help 10 s after the shock."}'
+    - '// @input bool placeInFrontOfUser = true {"hint":"Move the rescue space in front of wherever the user starts. Off = keep the authored position."}'
+    - "// @input float chestDistanceCm = 85 {\"hint\":\"Horizontal distance from the eyes to the figure's chest, in cm.\", \"widget\":\"slider\", \"min\":60, \"max\":140, \"step\":1}"
+    - '// @input float eyeHeightAboveFloorCm = 75 {"hint":"Floor distance below the eyes, in cm (about 75 for a kneeling rescuer).", "widget":"slider", "min":40, "max":170, "step":1}'
+    - '// @input float cueVolume = 0.6 {"hint":"Volume of the button, dispatcher-connect and shock sounds.", "widget":"slider", "min":0, "max":1, "step":0.05}'
+    - '// @ui {"widget":"group_end"}'

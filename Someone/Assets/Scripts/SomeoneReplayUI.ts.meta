@@ -1,0 +1,60 @@
+- !<AssetImportMetadata/d8228af1-5e37-4487-adc3-fd2a7c2453e2>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 044fcfbc-1509-4de2-8973-224d88db62db
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 044fcfbc-1509-4de2-8973-224d88db62db
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> b5d2cec5-7840-40e9-9a3d-73584f17722a
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/b5d2cec5-7840-40e9-9a3d-73584f17722a>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: c1c5c37f-bc48-4b5a-8257-fee7ee34c819
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    accentColor: false
+    fadeSeconds: false
+    replayWidthCm: false
+    textColor: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - replayWidthCm: !<float> 38.000000
+      textColor: !<Vec4> {x: 0.969000, y: 0.961000, z: 0.949000, w: 1.000000}
+      accentColor: !<Vec4> {x: 0.361000, y: 0.949000, z: 0.710000, w: 1.000000}
+      fadeSeconds: 0.500000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">SomeoneReplayUI - end-of-rescue replay</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float replayWidthCm = 38 {"hint":"Replay width in cm (slightly larger than the instruction card).", "widget":"slider", "min":24, "max":48, "step":1}'
+    - '// @input vec4 textColor = "{0.969,0.961,0.949,1}" {"hint":"Text color (warm white #F7F5F2).", "widget":"color"}'
+    - '// @input vec4 accentColor = "{0.361,0.949,0.71,1}" {"hint":"Accent for the on-pace value and closing line (mint #5CF2B5).", "widget":"color"}'
+    - '// @input float fadeSeconds = 0.5 {"hint":"Seconds for the reveal fade (design range 0.3 to 0.5).", "widget":"slider", "min":0.3, "max":0.5, "step":0.05}'
+    - '// @ui {"widget":"group_end"}'

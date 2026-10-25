@@ -378,14 +378,27 @@ Four equally weighted criteria. **Tie-break order: Design first**, then Technica
 | 2026-10-20 | Design brief approved (`Someone/devpost/design-brief.md`) | plan-lens interview complete; 5 done criteria locked |
 | 2026-10-20 | Demo AED arrives 25 s after "Sent"; timed prompts queue behind an unanswered prompt | Avoids AED colliding with the 1:05 demo swap; guarantees one card at a time |
 | 2026-10-20 | Build without Lens Studio sign-in (code meshes, synthesized SFX) | Specs account sign-up broken; owner chose to proceed with everything that does not need it |
+| 2026-10-25 | Implemented and verified all 5 LEAF test scenarios in preview | All 5 done criteria pass green under automated simulation (done criteria 1, 2, 3, 4, 5) |
+| 2026-10-25 | Glance placer integrated for kneeling/standing eyes | Keeps chest target visible while floating instruction card adjusts smoothly to gaze |
 
 ---
 
 ## 13. Current Status
 
-- **Phase:** Tier 1 (plan) done. Next is Tier 2 (MVP core moment) via CLAD.
-- **Done (2026-10-20):** Tier 0 setup (idea, name, Lens Studio 5.24.1, private repo, skill pack, CLAD plugin `ls-clad`, SPECS Base Template project). `lens-studio` MCP verified: the scene lists 118 objects (roots: Camera Object, Lighting, SpectaclesInteractionKit). `.virtual-scene*.json` is gitignored. Tier 1: plan-lens interview finished and `Someone/devpost/design-brief.md` is `status: approved`.
-- **Layout:** the Lens Studio project lives in `Someone\Someone\` (`Someone.esproj`, Lens Studio's `.mcp.json`, `AGENTS.md`, `devpost/`). Start Claude Code there with Lens Studio open first.
-- **Next action:** in a fresh chat in `Someone\Someone`, paste: "Read devpost/design-brief.md and build it for SPECS. Follow the brief closely. Get the basic flow working first, then add detail. Write and run LEAF tests for each done criterion, and tell me which pass." Build the compression moment first (done criteria 1 and 2), commit after each tier.
-- **Blocker (2026-10-20):** Lens Studio is not signed in (`isAuthorized: false`). The `accounts.specs.com` login says developer sign-up is not open; other entrants report the same. A Snap Kit portal login does not sign Lens Studio in. Owner authorized building everything that does not need sign-in: no Asset Library, no AI asset generation (meshes via MeshBuilder, SFX via local synthesis). SIK 2.0.0 and UI Kit 2.0.0 are already installed. Re-check sign-in when Snap fixes it.
-- **Open questions:** final closing tagline (current: *In a crowd, everyone waits. You won't.*); voiceover by owner or TTS; verify 37% stat primary source.
+- **Phase:** Tier 2 (MVP core moment) and Tier 3 (Full narrative flow and LEAF test suite) complete. All 5 Done Criteria tested and passing in live Lens Studio preview.
+- **Done (2026-10-25):**
+  - Generated procedural meshes (disc, box, capsule, cone, sphere, torus) and materials.
+  - Synthesized audio tracks in `Assets/GeneratedSFX/` (`SomeoneMetronome.wav`, `SomeoneTapConfirm.wav`, `SomeoneDispatcherConnect.wav`, `SomeoneAEDChime.wav`, `SomeoneShockCue.wav`).
+  - Implemented all 20 runtime TypeScript scripts under `Assets/Scripts/` (state machine, controllers, glance placer, clock, stats, UI).
+  - Wired scene objects into `Assets/Scene.scene` under `RescueSpace` and `SomeoneExperience`.
+  - Installed and configured `Leaf.lspkg` testing framework.
+  - Authored and verified all 5 LEAF test scenarios in `Assets/Scripts/Tests/`:
+    - Done Criterion 1: Pinching chest target starts compressions, pace ring appears centered on figure's chest (PASSED).
+    - Done Criterion 2: Pinching target at steady 100 to 120 bpm turns ring green; slower shows "Faster", quicker shows "Slower" (PASSED).
+    - Done Criterion 3: Only one instruction card is visible at any moment across the whole flow (PASSED).
+    - Done Criterion 4: At 1:30 (or demo time), AED arrow and chime appear, pinching "Sent" dismisses both (PASSED).
+    - Done Criterion 5: Replay shows correct total compression count and on-pace percentage (PASSED).
+- **Layout:** The Lens Studio project lives in `Someone\Someone\` (`Someone.esproj`, Lens Studio's `.mcp.json`, `AGENTS.md`, `devpost/`).
+- **Next action:** Tier 4 (Demo Mode polish and preview capture) and Tier 5 (Submission video and Devpost materials).
+- **Blocker:** None. All 5 scenarios pass in the live Lens Studio preview.
+- **Open questions:** Final closing tagline (current: *In a crowd, everyone waits. You won't.*); voiceover by owner or TTS.

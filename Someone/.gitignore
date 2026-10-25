@@ -28,3 +28,6 @@ ls-live-instance.json.tmp
 # END Lens Studio managed Agents-Docs block
 
 .virtual-scene*.json
+
+# Added by Lens Studio (LEAF plugin)
+leaf_plugin_settings.json

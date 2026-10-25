@@ -380,6 +380,7 @@ Four equally weighted criteria. **Tie-break order: Design first**, then Technica
 | 2026-10-20 | Build without Lens Studio sign-in (code meshes, synthesized SFX) | Specs account sign-up broken; owner chose to proceed with everything that does not need it |
 | 2026-10-25 | Implemented and verified all 5 LEAF test scenarios in preview | All 5 done criteria pass green under automated simulation (done criteria 1, 2, 3, 4, 5) |
 | 2026-10-25 | Glance placer integrated for kneeling/standing eyes | Keeps chest target visible while floating instruction card adjusts smoothly to gaze |
+| 2026-10-25 | Decided against 5.23.2 downgrade despite hackathon manager recommendation | Entrants report 5.23.2 fails with business-extension auth errors. Our 5.24.1 standalone build with procedural assets, native TypeScript, and LEAF tests runs completely unblocked without cloud dependencies. |
 
 ---
 

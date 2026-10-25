@@ -41,6 +41,7 @@ import {SomeoneGlancePlacer} from "./SomeoneGlancePlacer"
 import {SomeoneRescuePerimeter} from "./SomeoneRescuePerimeter"
 import {SomeoneHandPlacementGuide} from "./SomeoneHandPlacementGuide"
 import {SomeoneCompressionRipples} from "./SomeoneCompressionRipples"
+import {SomeoneSternumLandmark} from "./SomeoneSternumLandmark"
 
 const TAP_SOUND = requireAsset("../GeneratedSFX/SomeoneTapConfirm.wav") as AudioTrackAsset
 const CONNECT_SOUND = requireAsset("../GeneratedSFX/SomeoneDispatcherConnect.wav") as AudioTrackAsset
@@ -97,6 +98,10 @@ export class SomeoneMain extends BaseScriptComponent {
   @allowUndefined
   @hint("Kinetic compression depth ripples.")
   ripples: SomeoneCompressionRipples
+  @input
+  @allowUndefined
+  @hint("Anatomical sternum alignment landmark.")
+  sternumLandmark: SomeoneSternumLandmark
   @ui.group_end
 
   @ui.separator
@@ -133,6 +138,7 @@ export class SomeoneMain extends BaseScriptComponent {
   private framesUntilPlace = 3
   private ready = false
   private glancePlacer: SomeoneGlancePlacer | null = null
+  private isPractice = false
 
   onAwake(): void {
     const missing: string[] = []
@@ -162,6 +168,9 @@ export class SomeoneMain extends BaseScriptComponent {
       this.ripples = this.rescueSpace.createComponent(SomeoneCompressionRipples.getTypeName()) as SomeoneCompressionRipples
       if (this.chestTarget) this.ripples.chestTarget = this.chestTarget.getSceneObject()
     }
+    if (!this.sternumLandmark && this.rescueSpace) {
+      this.sternumLandmark = this.rescueSpace.createComponent(SomeoneSternumLandmark.getTypeName()) as SomeoneSternumLandmark
+    }
 
     this.tapAudio = this.makeAudio("TapAudio", TAP_SOUND)
     this.connectAudio = this.makeAudio("ConnectAudio", CONNECT_SOUND)
@@ -184,17 +193,33 @@ export class SomeoneMain extends BaseScriptComponent {
     this.shockAudio.playbackMode = Audio.PlaybackMode.LowPower
 
     this.instructionCard.onAction.add((a: CardAction) => {
+      if (this.isPractice) {
+        this.play(this.tapAudio)
+        this.exitPractice()
+        return
+      }
       if (this.sm.action(a)) this.play(this.tapAudio)
     })
     this.chestTarget.onPinch.add(() => {
       if (this.handsGuide && this.handsGuide.isShown) {
         this.handsGuide.pressDown()
       }
+      if (this.isPractice) {
+        const r = this.sm.tracker.addCompression(getTime())
+        this.sm.stats.record(r.grade, 0)
+        this.onCompression(r)
+        this.chestTarget.pressFeedback()
+        return
+      }
       if (this.sm.chestPinched(getTime())) this.chestTarget.pressFeedback()
     })
     this.replay.onRestart.add(() => {
       this.play(this.tapAudio)
       this.sm.start()
+    })
+    this.replay.onPractice.add(() => {
+      this.play(this.tapAudio)
+      this.startPractice()
     })
     this.metronome.onBeat.add(() => this.paceRing.pulse())
     this.dispatcher.onCaption.add((text: string) => this.instructionCard.setCaption(text))
@@ -322,6 +347,9 @@ export class SomeoneMain extends BaseScriptComponent {
     this.aedPads.setShown(this.sm.padsVisible)
     this.instructionCard.setBadgeVisible(this.sm.badgeVisible)
     this.clockChip.setChipVisible(this.sm.clockVisible)
+    if (this.sternumLandmark) {
+      this.sternumLandmark.setShown(this.sm.targetVisible)
+    }
   }
 
   // ---- Placement -------------------------------------------------------------------
@@ -392,6 +420,30 @@ export class SomeoneMain extends BaseScriptComponent {
     if (!a || !a.audioTrack) return
     if (a.isPlaying()) a.stop(false)
     a.play(1)
+  }
+
+  // ---- Practice Mode -------------------------------------------------------------
+  private startPractice(): void {
+    this.isPractice = true
+    this.replay.hideReplay()
+    this.sm.tracker.reset()
+    this.paceRing.setGrade("neutral")
+    this.rateCue.clearCue()
+    this.chestTarget.setShown(true)
+    this.paceRing.setShown(true)
+    this.metronome.startBeat()
+    if (this.sternumLandmark) this.sternumLandmark.setShown(true)
+    this.instructionCard.showStep("Cadence Practice. Target 110 bpm.", "End practice", "seeSomeone")
+  }
+
+  private exitPractice(): void {
+    this.isPractice = false
+    this.metronome.stopBeat()
+    this.paceRing.setShown(false)
+    this.chestTarget.setShown(false)
+    this.instructionCard.setCardVisible(false)
+    if (this.sternumLandmark) this.sternumLandmark.setShown(false)
+    this.replay.showReplay(this.sm.stats.snapshot())
   }
 
   // ---- Test surface (stable names) -----------------------------------------------------

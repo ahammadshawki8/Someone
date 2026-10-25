@@ -49,6 +49,11 @@ export class SomeoneReplayUI extends BaseScriptComponent {
     return this._onRestart.publicApi()
   }
 
+  private _onPractice = new Event<void>()
+  get onPractice(): PublicApi<void> {
+    return this._onPractice.publicApi()
+  }
+
   private tweens = new SomeoneTweens()
   private labelColor: vec4
   private texts: {t: Text; color: () => vec4}[] = []
@@ -61,6 +66,10 @@ export class SomeoneReplayUI extends BaseScriptComponent {
   private button: Button
   private buttonLabel: Text
   private buttonReady = false
+  private practiceBtnSo: SceneObject
+  private practiceBtn: Button
+  private practiceBtnLabel: Text
+  private practiceBtnReady = false
   private alpha = 0
   private shown = false
   private last: StatsSnapshot | null = null
@@ -86,7 +95,8 @@ export class SomeoneReplayUI extends BaseScriptComponent {
     })
     this.texts.push({t: this.closing, color: () => this.accentColor})
 
-    const btn = makeCapsuleButton(col.so, col.flex, "StartOver", "Start over", 14, 4.4, this.textColor)
+    const rowBtns = makeRow(col.so, col.flex, "ReplayButtons", W, 4.6, FlexJustify.Center)
+    const btn = makeCapsuleButton(rowBtns.so, rowBtns.flex, "StartOver", "Start over", 13, 4.4, this.textColor)
     this.buttonSo = btn.so
     this.button = btn.button
     this.buttonLabel = btn.label
@@ -98,6 +108,20 @@ export class SomeoneReplayUI extends BaseScriptComponent {
     })
     this.button.onTriggerUp.add(() => {
       if (this.shown && this.alpha > 0.5) this._onRestart.invoke()
+    })
+
+    const prac = makeCapsuleButton(rowBtns.so, rowBtns.flex, "PracticeCPR", "Practice CPR", 15, 4.4, this.accentColor)
+    this.practiceBtnSo = prac.so
+    this.practiceBtn = prac.button
+    this.practiceBtnLabel = prac.label
+    this.texts.push({t: this.practiceBtnLabel, color: () => this.accentColor})
+    this.practiceBtn.onInitialized.add(() => {
+      this.practiceBtnReady = true
+      this.practiceBtnSo.enabled = this.shown
+      this.apply()
+    })
+    this.practiceBtn.onTriggerUp.add(() => {
+      if (this.shown && this.alpha > 0.5) this._onPractice.invoke()
     })
     this.apply()
   }

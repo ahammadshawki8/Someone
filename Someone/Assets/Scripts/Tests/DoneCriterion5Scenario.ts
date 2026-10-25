@@ -33,10 +33,13 @@ export class DoneCriterion5Scenario extends Scenario {
     const chestTarget = getInteractables({sceneObjectName: "ChestTarget"})[0]
     if (!chestTarget) throw new Error("ChestTarget not found")
 
-    // Deliver 6 compressions at steady pace (~114 bpm)
+    // Deliver 6 compressions at steady pace (~110 bpm) with adaptive sleep
     for (let i = 0; i < 6; i++) {
+      const t0 = getTime()
       await interactor.trigger(chestTarget)
-      await sleep(145)
+      const elapsedMs = (getTime() - t0) * 1000
+      const toSleep = Math.max(10, Math.round(545 - elapsedMs))
+      await sleep(toSleep)
     }
 
     const recordedCompressions = main.compressionCount

@@ -39,20 +39,26 @@ export class DoneCriterion2Scenario extends Scenario {
     await sleep(145)
     expect(main.stateName).toBe("Compress")
 
-    // Steady pace pinches: trigger takes ~380ms, + 145ms sleep = ~525ms interval (~114 bpm)
+    // Steady pace pinches: target 110 bpm (~545ms interval) with adaptive sleep
     for (let i = 0; i < 6; i++) {
+      const t0 = getTime()
       await interactor.trigger(chestTarget)
-      await sleep(145)
+      const elapsedMs = (getTime() - t0) * 1000
+      const toSleep = Math.max(10, Math.round(545 - elapsedMs))
+      await sleep(toSleep)
     }
 
     // Verify steady rate: 100 to 120 bpm turns ring to good (mint) and rate cue says "Good."
     expect(main.ringColorState).toBe("good")
     expect(main.rateCueText.includes("Good")).toBe(true)
 
-    // Slower pace pinches: trigger ~380ms + 400ms sleep = ~780ms interval (~77 bpm)
+    // Slower pace pinches: target ~75 bpm (~800ms interval) with adaptive sleep
     for (let i = 0; i < 5; i++) {
+      const t0 = getTime()
       await interactor.trigger(chestTarget)
-      await sleep(400)
+      const elapsedMs = (getTime() - t0) * 1000
+      const toSleep = Math.max(10, Math.round(800 - elapsedMs))
+      await sleep(toSleep)
     }
 
     // Verify slow rate: shows "Faster."

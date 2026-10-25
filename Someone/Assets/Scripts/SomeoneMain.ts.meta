@@ -37,13 +37,16 @@
     demoMode: false
     dispatcher: false
     eyeHeightAboveFloorCm: false
+    handsGuide: false
     instructionCard: false
     metronome: false
     paceRing: false
+    perimeter: false
     placeInFrontOfUser: false
     rateCue: false
     replay: false
     rescueSpace: false
+    ripples: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -64,6 +67,9 @@
       aedWayfinder: !<MappingBased.AssignableType_8> 00000000-0000-0000-0000-000000000000
       aedPads: !<MappingBased.AssignableType_9> 00000000-0000-0000-0000-000000000000
       dispatcher: !<MappingBased.AssignableType_10> 00000000-0000-0000-0000-000000000000
+      perimeter: !<MappingBased.AssignableType_11> 00000000-0000-0000-0000-000000000000
+      handsGuide: !<MappingBased.AssignableType_12> 00000000-0000-0000-0000-000000000000
+      ripples: !<MappingBased.AssignableType_13> 00000000-0000-0000-0000-000000000000
       demoMode: false
       placeInFrontOfUser: true
       chestDistanceCm: !<float> 85.000000
@@ -88,6 +94,9 @@
     - '// @input AssignableType_8 aedWayfinder {"hint":"AED edge arrow and directional chime."}'
     - '// @input AssignableType_9 aedPads {"hint":"AED pad placement overlay."}'
     - '// @input AssignableType_10 dispatcher {"hint":"Scripted dispatcher captions (stand-in)."}'
+    - '// @input AssignableType_11 perimeter {"hint":"Floor rescue perimeter boundary."}'
+    - '// @input AssignableType_12 handsGuide {"hint":"Holographic hand placement guide."}'
+    - '// @input AssignableType_13 ripples {"hint":"Kinetic compression depth ripples."}'
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'

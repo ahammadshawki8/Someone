@@ -127,6 +127,15 @@ export class SomeoneInstructionCardUI extends BaseScriptComponent {
       this._onAction.invoke(this.action)
     })
     this.applyAlphas()
+    this.createEvent("UpdateEvent").bind(() => this.onUpdate())
+  }
+
+  private onUpdate(): void {
+    if (this.badgeShown && this.badgeText && this.shown) {
+      const bars = [" ılı ", " ı|ı ", " |ı| ", " ı|ı "]
+      const b = bars[Math.floor(getTime() * 4) % bars.length]
+      this.badgeText.text = "● LIVE 911" + b + "VIEWING"
+    }
   }
 
   // ---- API -------------------------------------------------------------------

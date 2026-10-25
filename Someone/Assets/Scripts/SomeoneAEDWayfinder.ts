@@ -11,6 +11,7 @@
 import WorldCameraFinderProvider from "SpectaclesInteractionKit.lspkg/Providers/CameraProvider/WorldCameraFinderProvider"
 import {SomeoneTweens} from "./SomeoneTween"
 import {SomeoneVisualFade} from "./SomeoneVisualFade"
+import {SomeoneAEDBeaconVisual} from "./SomeoneAEDBeaconVisual"
 
 @component
 export class SomeoneAEDWayfinder extends BaseScriptComponent {
@@ -63,6 +64,7 @@ export class SomeoneAEDWayfinder extends BaseScriptComponent {
   private untilChime = 0
   private chimes = 0
   private placed = false
+  private beaconVisual: SomeoneAEDBeaconVisual | null = null
 
   onAwake(): void {
     this.fade = new SomeoneVisualFade(this.arrow ? this.arrow : this.sceneObject)
@@ -72,6 +74,11 @@ export class SomeoneAEDWayfinder extends BaseScriptComponent {
     this.audio = host.createComponent("Component.AudioComponent") as AudioComponent
     if (this.chimeSound) this.audio.audioTrack = this.chimeSound
     this.audio.volume = this.chimeVolume
+    if (host.getComponent(SomeoneAEDBeaconVisual.getTypeName())) {
+      this.beaconVisual = host.getComponent(SomeoneAEDBeaconVisual.getTypeName()) as SomeoneAEDBeaconVisual
+    } else {
+      this.beaconVisual = host.createComponent(SomeoneAEDBeaconVisual.getTypeName()) as SomeoneAEDBeaconVisual
+    }
     this.createEvent("OnStartEvent").bind(() => {
       this.audio.playbackMode = Audio.PlaybackMode.LowPower
       const sa = this.audio.spatialAudio
@@ -93,6 +100,9 @@ export class SomeoneAEDWayfinder extends BaseScriptComponent {
       if (this.arrow) this.arrow.enabled = true
       this.placed = false
       this.untilChime = 0
+    }
+    if (this.beaconVisual) {
+      this.beaconVisual.setShown(on)
     }
     const from = this.alpha
     this.tweens.run(

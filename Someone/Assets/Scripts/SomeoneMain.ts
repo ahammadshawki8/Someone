@@ -42,6 +42,7 @@ import {SomeoneRescuePerimeter} from "./SomeoneRescuePerimeter"
 import {SomeoneHandPlacementGuide} from "./SomeoneHandPlacementGuide"
 import {SomeoneCompressionRipples} from "./SomeoneCompressionRipples"
 import {SomeoneSternumLandmark} from "./SomeoneSternumLandmark"
+import {SomeoneVictimAnimator} from "./SomeoneVictimAnimator"
 
 const TAP_SOUND = requireAsset("../GeneratedSFX/SomeoneTapConfirm.wav") as AudioTrackAsset
 const CONNECT_SOUND = requireAsset("../GeneratedSFX/SomeoneDispatcherConnect.wav") as AudioTrackAsset
@@ -102,6 +103,10 @@ export class SomeoneMain extends BaseScriptComponent {
   @allowUndefined
   @hint("Anatomical sternum alignment landmark.")
   sternumLandmark: SomeoneSternumLandmark
+  @input
+  @allowUndefined
+  @hint("Dynamic responsive victim physics.")
+  victimAnimator: SomeoneVictimAnimator
   @ui.group_end
 
   @ui.separator
@@ -129,6 +134,10 @@ export class SomeoneMain extends BaseScriptComponent {
   @hint("Volume of the button, dispatcher-connect and shock sounds.")
   @widget(new SliderWidget(0, 1, 0.05))
   cueVolume: number = 0.6
+
+  @input
+  @hint("Real Victim Mode: hides dummy mesh when filming with a real person.")
+  realVictimMode: boolean = false
   @ui.group_end
 
   private sm = new SomeoneRescueStateMachine()
@@ -171,6 +180,10 @@ export class SomeoneMain extends BaseScriptComponent {
     if (!this.sternumLandmark && this.rescueSpace) {
       this.sternumLandmark = this.rescueSpace.createComponent(SomeoneSternumLandmark.getTypeName()) as SomeoneSternumLandmark
     }
+    if (!this.victimAnimator && this.rescueSpace) {
+      this.victimAnimator = this.rescueSpace.createComponent(SomeoneVictimAnimator.getTypeName()) as SomeoneVictimAnimator
+      if (this.realVictimMode) this.victimAnimator.setDummyVisible(false)
+    }
 
     this.tapAudio = this.makeAudio("TapAudio", TAP_SOUND)
     this.connectAudio = this.makeAudio("ConnectAudio", CONNECT_SOUND)
@@ -203,6 +216,9 @@ export class SomeoneMain extends BaseScriptComponent {
     this.chestTarget.onPinch.add(() => {
       if (this.handsGuide && this.handsGuide.isShown) {
         this.handsGuide.pressDown()
+      }
+      if (this.victimAnimator) {
+        this.victimAnimator.compress()
       }
       if (this.isPractice) {
         const r = this.sm.tracker.addCompression(getTime())
@@ -314,6 +330,12 @@ export class SomeoneMain extends BaseScriptComponent {
     const copy = CARD_COPY[state]
     this.instructionCard.showStep(copy.line, copy.button, copy.action)
     if (state === "HelpArrives") this.dispatcher.clear()
+    if (this.victimAnimator) {
+      if (state === "Collapse") this.victimAnimator.setBreathing(true)
+      else if (state === "Call") this.victimAnimator.setBreathing(false)
+      else if (state === "PlaceHands" || state === "Compress") this.victimAnimator.setAirwayOpen(true)
+      else if (state === "HelpArrives") this.victimAnimator.triggerRecoveryGasp()
+    }
   }
 
   private onCompression(r: CompressionResult): void {

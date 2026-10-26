@@ -1,141 +1,76 @@
-# Someone - Hackathon Video Production & Capture Plan
+# Someone: video plan
 
-This document details the complete end-to-end plan to shoot, composite, and edit the final video submission for **Someone: Spatial Cardiac Arrest Tele-Triage for Snap Spectacles**.
+Under 3:00 (target 2:50), public on YouTube. Every frame is our own: Lens Studio preview recordings of the real Lens, our own Remotion and Blender renders, our own voice. No third-party clips, music, logos or trademarks. AHA, Red Cross and CARES are cited as plain text only.
 
----
+## Rules for this video
 
-## 1. Executive Summary & Objective
+- **Show the real Lens only.** Everything in the 0:30 to 2:00 block is a screen recording of the Lens Studio preview, unedited inside each shot.
+- **Name every stand-in on screen.** Small caption the first time each one appears: "Virtual figure (stand-in)", "One click = one compression in the preview", "Scripted dispatcher".
+- **Never claim what the preview cannot show.** No real person under the overlays, no depth, no hand tracking, no real call.
+- **No medical outcomes.** CPR keeps blood moving; the AED shock is simulated. Nobody "comes back to life" on screen.
+- **Frame the chest, not the cursor.** Hide the cursor where possible, so compressions do not read as a rhythm game.
 
-- **Target Duration:** 2 minutes 30 seconds (optimal for Devpost review).
-- **Core Narrative:** A bystander with zero medical training encounters a sudden cardiac arrest and uses Snap Spectacles to transform into an effective, confident first responder before EMS arrives.
-- **Production Technique:** Combination of **Third-Person Cinematic Footage** (establishing context) and **First-Person Spectacles POV** (filmed on phone and composited inside Lens Studio with `realVictimMode`).
+## Timeline
 
----
+| Time | Content | Source |
+|---|---|---|
+| 0:00 to 0:15 | Black. Crowd murmur. A voice: "Someone call 911. Someone help." Stylized silhouettes look at each other; nobody moves. Title: **Someone** | Blender silhouettes + Remotion |
+| 0:15 to 0:30 | Three stat cards, one at a time: "42% get CPR from a bystander." "Of trained bystanders who did not help, 37% said they panicked." "Every minute without CPR, survival falls about 10%." Then: "Built for the person who freezes." | Remotion |
+| 0:30 to 2:00 | **Live preview run in demo mode.** Collapse, check, call (badge + dispatcher caption), "Push here.", pace ring going from neutral to mint, one "Faster." moment, AED chime + edge arrow + "Sent", swap, pads + "Stand clear.", "Help is here.", replay with *You did not freeze.* | Lens Studio Interactive Preview, ffmpeg capture |
+| 2:00 to 2:40 | How it was built: plan-lens interview and approved brief, the agent building through CLAD and the MCP, the five LEAF scenarios passing | Screen recordings from the build |
+| 2:40 to 2:50 | The pace ring pulsing alone on black. *In a crowd, everyone waits. You won't.* **Someone. Be the someone.** | Remotion |
 
-## 2. Pre-Production Checklist
+## Capture the preview
 
-### Equipment
-- **Smartphone:** iPhone or Android capable of 1080p or 4K at 60 fps (or 30 fps).
-- **Audio:** Built-in phone mic or lapel mic for real-world dialogue; metronome & dispatcher audio exported directly from Lens Studio.
-- **Screen Recording:** Windows Game Bar (`Win + Alt + R`) or OBS Studio for clean 60 fps capture of Lens Studio Preview.
-- **Video Editor:** CapCut, DaVinci Resolve, or Adobe Premiere (free versions are completely sufficient).
+1. Open the project in Lens Studio. Preview panel: Interactive Preview, device SPECS, a calm indoor scene.
+2. Select `SomeoneExperience` and tick `demoMode` (AED prompt 0:45, swap 1:05, AED arrives 25 s after "Sent", help 10 s after the shock).
+3. Start the preview at the user's position. Step down to kneeling height with Q so the chest is about 85 cm ahead.
+4. Record the preview panel only, at 60 fps:
+   ```
+   C:\ffmpeg\bin\ffmpeg.exe -f gdigrab -framerate 60 -i title="Lens Studio" -c:v libx264 -crf 16 -pix_fmt yuv420p video\raw\preview_run.mp4
+   ```
+   Crop to the panel in the edit. Record Lens audio (metronome, chime, dispatcher) with the same take.
+5. Pinch to the beat. Aim for mint most of the run, with one deliberate slow stretch to show "Faster.".
+6. Do three full takes. Keep the cleanest.
 
-### Roles
-1. **Rescuer (Camera Operator):** Holds phone at upper chest / chin level to simulate Spectacles POV, brings hands into frame for shoulder taps and CPR compressions.
-2. **Victim (Actor):** Lies motionless flat on back (supine) on an open floor, carpet, or outdoor grass/pavement.
-3. **Optional Third Person:** Records third-person contextual shots from a wide angle.
+## Capture the build story
 
----
+- The approved brief: scroll `devpost/design-brief.md`, done criteria visible.
+- The LEAF panel running all five scenarios, ending on five passes.
+- A short clip of the agent working in Lens Studio through the MCP.
 
-## 3. Shot-by-Shot Storyboard
+## Voiceover (about 280 words, read calmly, not acted)
 
-```
-[0:00 - 0:25] The Problem & Collapse (Third-Person + POV)
-  │
-[0:25 - 0:45] Assessment & 911 Tele-Triage Connection (POV)
-  │
-[0:45 - 1:30] Hand Placement & Continuous CPR Cadence (Picture-in-Picture)
-  │
-[1:30 - 2:00] Spatial AED Wayfinding & Shock Delivery (POV)
-  │
-[2:00 - 2:30] ROSC Signs of Life & Impact Summary (Wide + Stats)
-```
+> When someone collapses, everyone looks at everyone else. We all wait for someone.
+>
+> Most people know CPR exists. The problem is the freeze. Of trained bystanders who did not help, more than a third said they simply panicked.
+>
+> Someone is a Lens for Snap SPECS, built for that moment. It shows one thing to do at a time. Is the person breathing? No. Call 911.
+>
+> The dispatcher connects and sees what you see. Then a target appears on the center of the chest, where your hands go, and a ring pulses at 110 beats a minute. The beat comes from the chest itself. Push with it. Mint means you are on pace. Too slow, and it tells you, quietly.
+>
+> Your hands stay on the person. Your eyes stay on the person. That is why this belongs on glasses: a phone would have to be put down.
+>
+> At a minute and a half, a chime from beside you. The AED is forty meters away. Send someone. At two minutes, switch with a helper. When the AED arrives, the pads show where they go. Stand clear.
+>
+> When help arrives, you see what you did. And one line: You did not freeze.
+>
+> In the preview, the person is a virtual figure, a click is a compression, and the dispatcher is scripted. Real glasses could do more. The design stays the same: one calm step at a time.
+>
+> We planned it with plan-lens, built it through CLAD and the Lens Studio MCP, and tested every done criterion with LEAF.
+>
+> In a crowd, everyone waits. You won't.
 
-### Scene 1: The Crisis (0:00 - 0:25)
-- **Visual:** A hallway, living room, or outdoor park. A person suddenly clutches their chest and collapses to the floor. A bystander rushes over looking panicked.
-- **Voiceover / Caption:** *"Sudden cardiac arrest kills 350,000 people annually in the US alone. 70% happen in homes or public spaces. Most bystanders freeze because they lack confidence."*
-- **Camera:** Cuts to rescuer putting on Spectacles (or looking down at the victim).
+## Audio
 
-### Scene 2: Spatial Perimeter & Assessment (0:25 - 0:45)
-- **Visual (First-Person POV):** 
-  - The rescuer kneels beside the victim.
-  - The **360° Rescue Zone perimeter** (`[ RESCUE ZONE - MAINTAIN 360 CLEAR AREA ]`) illuminates on the floor around the victim's body.
-  - Rescuer reaches hands out and firmly taps the victim's shoulders: *"Are you okay? Can you hear me?!"*
-  - Floating card: `Check response and breathing`.
-  - Rescuer pinches card: `No breathing, start CPR`.
-- **Audio:** Click confirmation sound; tele-triage connection chime.
+- Lens audio from the preview take (metronome, chime, dispatcher).
+- Owner's voiceover, recorded quietly, no music under the live run. If any music is used elsewhere: royalty-free only, with the license saved in `video/licenses/`.
 
-### Scene 3: Tele-Triage & Holographic Hand Guide (0:45 - 1:05)
-- **Visual (First-Person POV):**
-  - **911 Tele-Triage badge** flashes green (`● LIVE 911 ılı VIEWING`).
-  - Dispatcher caption appears: *"911 Dispatcher: EMS en route. Place both hands in the center of the chest."*
-  - **Holographic 3D Interlocking Hands** float 10 cm above the victim's sternum with label `HEEL ON CENTER - INTERLOCK FINGERS`.
-  - Rescuer brings their real hands into frame and matches the exact posture over the victim's chest.
+## Before upload
 
-### Scene 4: Cadence Practice & Compression Feedback (1:05 - 1:45)
-- **Visual (Split-Screen / Picture-in-Picture):**
-  - **Main View (POV):** **Sternum crosshair** with cardinal ticks marks the lower third of the chest. Rescuer performs rhythmic compressions.
-  - **Kinetic Shockwaves:** Dynamic mint shockwaves expand across the floor on each compression.
-  - **Spatial Metronome & Pace Ring:** 110 bpm audio pulses; rate feedback turns bright mint (`PERFECT PACE: 110 BPM`).
-  - **Corner Box (Third-Person):** Shows the rescuer physically pushing down on rhythm.
-- **Audio:** Crisp 110 bpm metronome clicks + dispatcher encouragement: *"Good depth, keep this exact rhythm!"*
-
-### Scene 5: Spatial AED Wayfinding & Rescue (1:45 - 2:10)
-- **Visual (First-Person POV):**
-  - A flashing cyan 3D beacon appears in the distance (`[ AED - 40m ]`) with expanding sonar rings.
-  - A 3D edge arrow points the rescuer's gaze toward the AED unit.
-  - Defibrillator pads overlay on the victim's right upper chest and left ribs.
-  - `STAND CLEAR - SHOCK IN 3... 2... 1...` -> Shock pulse visual wave.
-- **Victim Reaction:** Deep recovery gasp (+2.5 cm chest rise) as heart rate stabilizes.
-
-### Scene 6: Session Replay & Value Summary (2:10 - 2:30)
-- **Visual:**
-  - **Replay HUD:** Displays total compressions (e.g., `84 compressions`), `% On-Pace (95%)`, and emergency elapsed time (`01:42`).
-  - Bystander smiles with relief as paramedics arrive.
-  - Title Card: **Someone - When every second counts, anyone can be someone.**
-
----
-
-## 4. Lens Studio Video Integration Steps
-
-To composite your real footage into the Lens Studio simulation:
-
-1. **Record the Video on Phone:**
-   - 1080p or 4K at 60 fps, **Horizontal Landscape (16:9)**.
-   - Walk up, kneel down, tap shoulders, position hands, and compress at ~110 bpm for 45-60 seconds.
-   - Save file as `rescue_raw.mp4`.
-2. **Transfer to PC:**
-   - Place `rescue_raw.mp4` into `C:/Users/Shawki/Desktop/Specs/Someone/`.
-3. **Load into Lens Studio Preview:**
-   - In Lens Studio, locate the **Preview** panel.
-   - Click the input dropdown (top left of the Preview panel) -> select **From File...** -> choose `rescue_raw.mp4`.
-   - Set device to **SPECS 27**.
-4. **Configure Settings in Inspector:**
-   - Select `SomeoneExperience` in the Objects hierarchy.
-   - In Inspector:
-     - Check `realVictimMode = true` (hides 3D dummy mesh so AR overlays sit directly on your real friend).
-     - Check `demoMode = true` (uses expedited timers for smooth pacing).
-5. **Record Clean Footage:**
-   - Press `Win + Alt + R` (Windows Game Bar) or use OBS Studio to record the Preview panel in full HD.
-
----
-
-## 5. Alternative: Built-In 3D Environments (Zero External Filming)
-
-If filming outdoors is not feasible, use the verified built-in 3D simulation:
-1. Preview panel dropdown -> **Interactive** -> **Colorful Home** or **Sunlit Room**.
-2. Set device to **SPECS 27**.
-3. Leave `realVictimMode = false` so the newly integrated rigged anatomical 3D human body mesh is displayed.
-4. Record the interactive walkthrough using WASD and mouse navigation.
-
----
-
-## 6. Video Editing Blueprint (Final Assembly)
-
-| Track | Content |
-| :--- | :--- |
-| **Video Track 1 (Base)** | First-Person POV capture from Lens Studio (real room video + AR overlays). |
-| **Video Track 2 (Overlay)** | Picture-in-picture box (bottom right) showing third-person wide angle of the actor and rescuer. |
-| **Audio Track 1** | Voiceover narration explaining the clinical rationale and Spectacles features. |
-| **Audio Track 2** | In-engine audio (110 bpm metronome, button clicks, shock cues). |
-| **Audio Track 3** | Subtle dramatic ambient background music (ducked under voiceover). |
-
----
-
-## 7. Submission Checklist Before Uploading
-
-- [ ] Video exported in 1080p 60fps (MP4, H.264).
-- [ ] Total duration between 2:00 and 2:45.
-- [ ] Demonstrates hand-tracking / pinch interactions.
-- [ ] Shows spatial audio and metronome pacing clearly.
-- [ ] Uploaded to YouTube as Unlisted/Public and URL pasted into Devpost.
+- [ ] Under 3:00.
+- [ ] Every stand-in labelled on screen.
+- [ ] Stats match the README wording exactly.
+- [ ] No third-party logos, clips or music without a license.
+- [ ] No em or en dashes in titles and captions.
+- [ ] Uploaded public on YouTube; link pasted into Devpost.

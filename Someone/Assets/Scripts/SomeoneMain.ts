@@ -38,11 +38,6 @@ import {SomeoneRateCueUI} from "./SomeoneRateCueUI"
 import {RescueEvent, SomeoneRescueStateMachine} from "./SomeoneRescueStateMachine"
 import {SomeoneReplayUI} from "./SomeoneReplayUI"
 import {SomeoneGlancePlacer} from "./SomeoneGlancePlacer"
-import {SomeoneRescuePerimeter} from "./SomeoneRescuePerimeter"
-import {SomeoneHandPlacementGuide} from "./SomeoneHandPlacementGuide"
-import {SomeoneCompressionRipples} from "./SomeoneCompressionRipples"
-import {SomeoneSternumLandmark} from "./SomeoneSternumLandmark"
-import {SomeoneVictimAnimator} from "./SomeoneVictimAnimator"
 
 const TAP_SOUND = requireAsset("../GeneratedSFX/SomeoneTapConfirm.wav") as AudioTrackAsset
 const CONNECT_SOUND = requireAsset("../GeneratedSFX/SomeoneDispatcherConnect.wav") as AudioTrackAsset
@@ -87,26 +82,6 @@ export class SomeoneMain extends BaseScriptComponent {
   @input
   @hint("Scripted dispatcher captions (stand-in).")
   dispatcher: SomeoneDispatcherController
-  @input
-  @allowUndefined
-  @hint("Floor rescue perimeter boundary.")
-  perimeter: SomeoneRescuePerimeter
-  @input
-  @allowUndefined
-  @hint("Holographic hand placement guide.")
-  handsGuide: SomeoneHandPlacementGuide
-  @input
-  @allowUndefined
-  @hint("Kinetic compression depth ripples.")
-  ripples: SomeoneCompressionRipples
-  @input
-  @allowUndefined
-  @hint("Anatomical sternum alignment landmark.")
-  sternumLandmark: SomeoneSternumLandmark
-  @input
-  @allowUndefined
-  @hint("Dynamic responsive victim physics.")
-  victimAnimator: SomeoneVictimAnimator
   @ui.group_end
 
   @ui.separator
@@ -134,10 +109,6 @@ export class SomeoneMain extends BaseScriptComponent {
   @hint("Volume of the button, dispatcher-connect and shock sounds.")
   @widget(new SliderWidget(0, 1, 0.05))
   cueVolume: number = 0.6
-
-  @input
-  @hint("Real Victim Mode: hides dummy mesh when filming with a real person.")
-  realVictimMode: boolean = false
   @ui.group_end
 
   private sm = new SomeoneRescueStateMachine()
@@ -147,7 +118,6 @@ export class SomeoneMain extends BaseScriptComponent {
   private framesUntilPlace = 3
   private ready = false
   private glancePlacer: SomeoneGlancePlacer | null = null
-  private isPractice = false
 
   onAwake(): void {
     const missing: string[] = []
@@ -166,25 +136,6 @@ export class SomeoneMain extends BaseScriptComponent {
       console.error("[SomeoneMain] Missing @input wiring: " + missing.join(", "))
       return
     }
-    if (!this.perimeter && this.rescueSpace) {
-      this.perimeter = this.rescueSpace.createComponent(SomeoneRescuePerimeter.getTypeName()) as SomeoneRescuePerimeter
-    }
-    if (!this.handsGuide && this.rescueSpace) {
-      this.handsGuide = this.rescueSpace.createComponent(SomeoneHandPlacementGuide.getTypeName()) as SomeoneHandPlacementGuide
-      if (this.chestTarget) this.handsGuide.chestTarget = this.chestTarget.getSceneObject()
-    }
-    if (!this.ripples && this.rescueSpace) {
-      this.ripples = this.rescueSpace.createComponent(SomeoneCompressionRipples.getTypeName()) as SomeoneCompressionRipples
-      if (this.chestTarget) this.ripples.chestTarget = this.chestTarget.getSceneObject()
-    }
-    if (!this.sternumLandmark && this.rescueSpace) {
-      this.sternumLandmark = this.rescueSpace.createComponent(SomeoneSternumLandmark.getTypeName()) as SomeoneSternumLandmark
-    }
-    if (!this.victimAnimator && this.rescueSpace) {
-      this.victimAnimator = this.rescueSpace.createComponent(SomeoneVictimAnimator.getTypeName()) as SomeoneVictimAnimator
-      if (this.realVictimMode) this.victimAnimator.setDummyVisible(false)
-    }
-
     this.tapAudio = this.makeAudio("TapAudio", TAP_SOUND)
     this.connectAudio = this.makeAudio("ConnectAudio", CONNECT_SOUND)
     this.shockAudio = this.makeAudio("ShockAudio", SHOCK_SOUND)
@@ -206,65 +157,17 @@ export class SomeoneMain extends BaseScriptComponent {
     this.shockAudio.playbackMode = Audio.PlaybackMode.LowPower
 
     this.instructionCard.onAction.add((a: CardAction) => {
-      if (this.isPractice) {
-        this.play(this.tapAudio)
-        this.exitPractice()
-        return
-      }
       if (this.sm.action(a)) this.play(this.tapAudio)
     })
     this.chestTarget.onPinch.add(() => {
-      if (this.handsGuide && this.handsGuide.isShown) {
-        this.handsGuide.pressDown()
-      }
-      if (this.victimAnimator) {
-        this.victimAnimator.compress()
-      }
-      if (this.isPractice) {
-        const r = this.sm.tracker.addCompression(getTime())
-        this.sm.stats.record(r.grade, 0)
-        this.onCompression(r)
-        this.chestTarget.pressFeedback()
-        return
-      }
       if (this.sm.chestPinched(getTime())) this.chestTarget.pressFeedback()
     })
     this.replay.onRestart.add(() => {
       this.play(this.tapAudio)
       this.sm.start()
     })
-    this.replay.onPractice.add(() => {
-      this.play(this.tapAudio)
-      this.startPractice()
-    })
     this.metronome.onBeat.add(() => this.paceRing.pulse())
     this.dispatcher.onCaption.add((text: string) => this.instructionCard.setCaption(text))
-
-    // Stylize victim figure: emergency navy responder clothing on torso & legs
-    const findChild = (parent: SceneObject, name: string): SceneObject | null => {
-      for (let i = 0; i < parent.getChildrenCount(); i++) {
-        const c = parent.getChild(i)
-        if (c.name === name) return c
-        const sub = findChild(c, name)
-        if (sub) return sub
-      }
-      return null
-    }
-    const figure = findChild(this.rescueSpace, "VictimFigure_StandIn")
-    if (figure) {
-      const clothingColor = new vec4(0.18, 0.24, 0.34, 1.0)
-      for (const name of ["Torso", "LegNear", "LegFar"]) {
-        const part = findChild(figure, name)
-        if (part) {
-          const rmv = part.getComponent("Component.RenderMeshVisual") as RenderMeshVisual
-          if (rmv && rmv.mainMaterial) {
-            const clone = rmv.mainMaterial.clone()
-            clone.mainPass.baseColor = clothingColor
-            rmv.mainMaterial = clone
-          }
-        }
-      }
-    }
 
     this.ready = true
     this.sm.start()
@@ -313,7 +216,6 @@ export class SomeoneMain extends BaseScriptComponent {
         this.replay.showReplay(e.stats)
         break
       case "restarted":
-        if (this.handsGuide) this.handsGuide.setShown(false, true)
         this.replay.hideReplay()
         this.dispatcher.clear()
         this.paceRing.setGrade("neutral")
@@ -330,18 +232,9 @@ export class SomeoneMain extends BaseScriptComponent {
     const copy = CARD_COPY[state]
     this.instructionCard.showStep(copy.line, copy.button, copy.action)
     if (state === "HelpArrives") this.dispatcher.clear()
-    if (this.victimAnimator) {
-      if (state === "Collapse") this.victimAnimator.setBreathing(true)
-      else if (state === "Call") this.victimAnimator.setBreathing(false)
-      else if (state === "PlaceHands" || state === "Compress") this.victimAnimator.setAirwayOpen(true)
-      else if (state === "HelpArrives") this.victimAnimator.triggerRecoveryGasp()
-    }
   }
 
   private onCompression(r: CompressionResult): void {
-    if (this.ripples) {
-      this.ripples.emit(r.grade)
-    }
     this.paceRing.setGrade(r.grade)
     if (r.direction === null) {
       this.rateCue.clearCue()
@@ -358,10 +251,6 @@ export class SomeoneMain extends BaseScriptComponent {
     const compressing = this.sm.isCompressing
     this.chestTarget.setShown(this.sm.targetVisible)
     this.paceRing.setShown(compressing)
-    if (this.handsGuide) {
-      const showHands = this.sm.visibleState === "PlaceHands"
-      this.handsGuide.setShown(showHands)
-    }
     if (compressing) this.metronome.startBeat()
     else this.metronome.stopBeat()
     if (!compressing) this.rateCue.clearCue()
@@ -369,9 +258,6 @@ export class SomeoneMain extends BaseScriptComponent {
     this.aedPads.setShown(this.sm.padsVisible)
     this.instructionCard.setBadgeVisible(this.sm.badgeVisible)
     this.clockChip.setChipVisible(this.sm.clockVisible)
-    if (this.sternumLandmark) {
-      this.sternumLandmark.setShown(this.sm.targetVisible)
-    }
   }
 
   // ---- Placement -------------------------------------------------------------------
@@ -442,30 +328,6 @@ export class SomeoneMain extends BaseScriptComponent {
     if (!a || !a.audioTrack) return
     if (a.isPlaying()) a.stop(false)
     a.play(1)
-  }
-
-  // ---- Practice Mode -------------------------------------------------------------
-  private startPractice(): void {
-    this.isPractice = true
-    this.replay.hideReplay()
-    this.sm.tracker.reset()
-    this.paceRing.setGrade("neutral")
-    this.rateCue.clearCue()
-    this.chestTarget.setShown(true)
-    this.paceRing.setShown(true)
-    this.metronome.startBeat()
-    if (this.sternumLandmark) this.sternumLandmark.setShown(true)
-    this.instructionCard.showStep("Cadence Practice. Target 110 bpm.", "End practice", "seeSomeone")
-  }
-
-  private exitPractice(): void {
-    this.isPractice = false
-    this.metronome.stopBeat()
-    this.paceRing.setShown(false)
-    this.chestTarget.setShown(false)
-    this.instructionCard.setCardVisible(false)
-    if (this.sternumLandmark) this.sternumLandmark.setShown(false)
-    this.replay.showReplay(this.sm.stats.snapshot())
   }
 
   // ---- Test surface (stable names) -----------------------------------------------------

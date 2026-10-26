@@ -12,6 +12,7 @@
  */
 import {PALETTE} from "./SomeoneConfig"
 import {RateGrade} from "./SomeoneCompressionTracker"
+import {buildFlatRing} from "./SomeoneFlatRing"
 import {SomeoneTweens} from "./SomeoneTween"
 import {SomeoneVisualFade} from "./SomeoneVisualFade"
 
@@ -22,7 +23,7 @@ export class SomeonePaceRingController extends BaseScriptComponent {
   @ui.label('<span style="color: #60A5FA;">References</span>')
   @ui.group_start("References")
   @input
-  @hint("Ring visual (the torus). Scaled for the pulse.")
+  @hint("Ring visual. Its mesh is replaced by a thin flat ring at awake; scaled for the pulse.")
   ringVisual: SceneObject
   @ui.group_end
 
@@ -38,6 +39,16 @@ export class SomeonePaceRingController extends BaseScriptComponent {
   @hint("Seconds for the show, hide and color fades (design range 0.3 to 0.5).")
   @widget(new SliderWidget(0.3, 0.5, 0.05))
   fadeSeconds: number = 0.4
+
+  @input
+  @hint("Ring radius in cm, measured to the middle of the line. Sits just outside the hand target.")
+  @widget(new SliderWidget(6, 18, 0.5))
+  ringRadiusCm: number = 11
+
+  @input
+  @hint("Ring line width in cm. Thin and crisp, never a filled disc.")
+  @widget(new SliderWidget(0.3, 2, 0.1))
+  ringWidthCm: number = 0.8
   @ui.group_end
 
   private tweens = new SomeoneTweens()
@@ -51,8 +62,17 @@ export class SomeonePaceRingController extends BaseScriptComponent {
 
   onAwake(): void {
     const root = this.ringVisual ? this.ringVisual : this.sceneObject
+    if (this.ringVisual) {
+      // Replace the authored torus with a thin flat ring built in cm.
+      const rmv = this.ringVisual.getComponent("Component.RenderMeshVisual")
+      if (rmv) {
+        const half = this.ringWidthCm / 2
+        rmv.mesh = buildFlatRing(this.ringRadiusCm - half, this.ringRadiusCm + half)
+        this.ringVisual.getTransform().setLocalScale(vec3.one())
+      }
+      this.baseScale = this.ringVisual.getTransform().getLocalScale()
+    }
     this.fade = new SomeoneVisualFade(root)
-    if (this.ringVisual) this.baseScale = this.ringVisual.getTransform().getLocalScale()
     this.apply()
   }
 

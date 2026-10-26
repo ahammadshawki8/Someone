@@ -30,7 +30,9 @@
   ScriptInputsHidden:
     fadeSeconds: false
     pulseAmount: false
+    ringRadiusCm: false
     ringVisual: false
+    ringWidthCm: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -43,6 +45,8 @@
     - ringVisual: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       pulseAmount: 0.080000
       fadeSeconds: 0.400000
+      ringRadiusCm: !<float> 11.000000
+      ringWidthCm: 0.800000
   ScriptTypes:
     -
       {}
@@ -51,11 +55,13 @@
     - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">References</span>"}'
     - '// @ui {"widget":"group_start", "label":"References"}'
-    - '// @input SceneObject ringVisual {"hint":"Ring visual (the torus). Scaled for the pulse."}'
+    - '// @input SceneObject ringVisual {"hint":"Ring visual. Its mesh is replaced by a thin flat ring at awake; scaled for the pulse."}'
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
     - '// @ui {"widget":"group_start", "label":"Settings"}'
     - '// @input float pulseAmount = 0.08 {"hint":"How much the ring swells on each beat (0.08 = 8 percent).", "widget":"slider", "min":0, "max":0.2, "step":0.01}'
     - '// @input float fadeSeconds = 0.4 {"hint":"Seconds for the show, hide and color fades (design range 0.3 to 0.5).", "widget":"slider", "min":0.3, "max":0.5, "step":0.05}'
+    - '// @input float ringRadiusCm = 11 {"hint":"Ring radius in cm, measured to the middle of the line. Sits just outside the hand target.", "widget":"slider", "min":6, "max":18, "step":0.5}'
+    - '// @input float ringWidthCm = 0.8 {"hint":"Ring line width in cm. Thin and crisp, never a filled disc.", "widget":"slider", "min":0.3, "max":2, "step":0.1}'
     - '// @ui {"widget":"group_end"}'

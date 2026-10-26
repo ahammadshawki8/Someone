@@ -7,9 +7,9 @@
     - !<own> d498ccd7-9176-4526-aab5-866a0f8d9d31
     - !<own> 8858d7b2-0471-47f5-8431-0bbf248b4f9e
     - !<own> 95fc37c8-722d-40d3-a9a7-1c29c357667e
-    - !<own> ab61d6f8-e56c-4d5d-9b48-467dd4b5e758
     - !<own> 84222915-2244-462f-b223-f9f887ed7d89
     - !<own> 4c0f6571-573e-4215-8ed3-923ccdc7a285
+    - !<own> 2c63f53e-b1d7-418e-819c-17143a992ff3
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - id: 1
@@ -226,8 +226,8 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 12.000000, y: 19.799999, z: -13.000000}
-    Rotation: {x: -28.000000, y: 0.000000, z: 0.000000}
+    Position: {x: 16.000000, y: 21.400000, z: -9.000000}
+    Rotation: {x: -18.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 12.000000, y: 0.400000, z: 8.000000}
     HasSegmentScaleCompensation: false
   Children:
@@ -944,6 +944,22 @@
     []
   Components:
     - !<own> 74123493-a3fd-497c-8506-5a45ac93a75a
+- !<SceneObject/2c63f53e-b1d7-418e-819c-17143a992ff3>
+  PrefabRemaps:
+    []
+  Name: AiPreviewAgent Handler
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 6802241e-e292-4ce7-9742-f642b2e27f19
+    - !<own> eba6b637-e603-4b65-b7d1-fec2500f58db
 - !<SceneObject/2dae2a27-8ce6-466a-8bff-622195c1b3a8>
   PrefabRemaps:
     []
@@ -1262,8 +1278,8 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: -10.000000, y: 20.000000, z: 9.000000}
-    Rotation: {x: 15.000000, y: 0.000000, z: 0.000000}
+    Position: {x: -9.000000, y: 21.600000, z: 8.000000}
+    Rotation: {x: 12.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 12.000000, y: 0.400000, z: 8.000000}
     HasSegmentScaleCompensation: false
   Children:
@@ -1653,6 +1669,22 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<ScriptComponent/6802241e-e292-4ce7-9742-f642b2e27f19>
+  PrefabRemaps:
+    []
+  Name: AgentInspectScript
+  Enabled: true
+  ScriptAsset: !<reference> 0b25079c-f5bf-4c6d-96c4-f43b89dfa213
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      {}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/6a7a67db-5675-49bb-8f31-ba0588e3cffc>
   PrefabRemaps:
     []
@@ -2342,22 +2374,6 @@
     []
   Components:
     - !<own> 02734112-01d0-4daf-8806-70a79ee062b9
-- !<ScriptComponent/a1c7b5fb-4833-4ad2-bb2d-2c16e0e3f597>
-  PrefabRemaps:
-    []
-  Name: AgentInspectScript
-  Enabled: true
-  ScriptAsset: !<reference> 0b25079c-f5bf-4c6d-96c4-f43b89dfa213
-  ScriptInputsDefault:
-    {}
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      {}
-  ScriptTypes:
-    "":
-      {}
 - !<SceneObject/a4b1ce71-4840-4493-bc52-58f3c13933e1>
   PrefabRemaps:
     []
@@ -2482,21 +2498,6 @@
     []
   Components:
     - !<own> 11c4bb09-7c38-4023-9802-74f9f28709a9
-- !<SceneObject/ab61d6f8-e56c-4d5d-9b48-467dd4b5e758>
-  PrefabRemaps:
-    []
-  Name: AiPreviewAgent Handler
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> a1c7b5fb-4833-4ad2-bb2d-2c16e0e3f597
 - !<SceneObject/abfa4c71-3560-46f0-9471-90e212f21185>
   PrefabRemaps:
     []
@@ -2968,6 +2969,8 @@
     edgeOffsetCm: true
     chimeIntervalSec: true
     chimeVolume: true
+    chevronWidthCm: true
+    chevronStrokeCm: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -2979,6 +2982,8 @@
       edgeOffsetCm: !<float> 10.000000
       chimeIntervalSec: !<float> 4.000000
       chimeVolume: 0.800000
+      chevronWidthCm: 4.500000
+      chevronStrokeCm: 0.700000
   ScriptTypes:
     "":
       {}
@@ -3450,6 +3455,22 @@
       textColor: !<Vec4> {x: 0.969000, y: 0.961000, z: 0.949000, w: 1.000000}
       badgeColor: !<Vec4> {x: 0.361000, y: 0.949000, z: 0.710000, w: 1.000000}
       fadeSeconds: 0.400000
+  ScriptTypes:
+    "":
+      {}
+- !<ScriptComponent/eba6b637-e603-4b65-b7d1-fec2500f58db>
+  PrefabRemaps:
+    []
+  Name: AgentInteractScript
+  Enabled: true
+  ScriptAsset: !<reference> 29091811-e792-46be-bfa4-28ddec5f11be
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      {}
   ScriptTypes:
     "":
       {}

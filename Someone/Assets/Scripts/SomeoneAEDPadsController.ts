@@ -29,6 +29,11 @@ export class SomeoneAEDPadsController extends BaseScriptComponent {
   private glow = 0
 
   onAwake(): void {
+    // Pads are overlays: draw after the figure so its curved chest never cuts them.
+    for (let i = 0; i < this.sceneObject.getChildrenCount(); i++) {
+      const rmv = this.sceneObject.getChild(i).getComponent("Component.RenderMeshVisual")
+      if (rmv) rmv.setRenderOrder(50)
+    }
     this.fade = new SomeoneVisualFade(this.sceneObject)
     this.apply()
   }

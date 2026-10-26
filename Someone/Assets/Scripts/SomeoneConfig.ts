@@ -106,15 +106,15 @@ export interface CardContent {
 // ---- Copy -------------------------------------------------------------------
 export const CARD_COPY: Record<RescueStateName, CardContent> = {
   Collapse: {line: "Someone collapsed.", button: "I see someone", action: "seeSomeone"},
-  Check: {line: "Tap their shoulder. Are they breathing?", button: "Not breathing", action: "notBreathing"},
+  Check: {line: "Tap their shoulder.\nAre they breathing?", button: "Not breathing", action: "notBreathing"},
   Call: {line: "Get help now.", button: "Call 911", action: "call911"},
   PlaceHands: {line: "Push here.", button: null, action: null},
   Compress: {line: "Push hard and fast.", button: null, action: null},
   SendForAED: {line: "AED, 40 m. Send someone.", button: "Sent", action: "sent"},
-  Swap: {line: "Switch with a helper if you can.", button: "Swapped", action: "swapped"},
-  AEDArrives: {line: "The AED is here. Pads go here.", button: null, action: null},
+  Swap: {line: "Switch with a helper\nif you can.", button: "Swapped", action: "swapped"},
+  AEDArrives: {line: "The AED is here.\nPads go here.", button: null, action: null},
   StandClear: {line: "Stand clear.", button: null, action: null},
-  Resume: {line: "Resume compressions. Push here.", button: null, action: null},
+  Resume: {line: "Resume compressions.\nPush here.", button: null, action: null},
   HelpArrives: {line: "Help is here.", button: null, action: null},
   Replay: {line: "", button: null, action: null}
 }

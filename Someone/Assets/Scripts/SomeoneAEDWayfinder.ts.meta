@@ -31,6 +31,8 @@
     aedBeacon: false
     arrow: false
     arrowDistanceCm: false
+    chevronStrokeCm: false
+    chevronWidthCm: false
     chimeIntervalSec: false
     chimeSound: false
     chimeVolume: false
@@ -51,6 +53,8 @@
       edgeOffsetCm: !<float> 10.000000
       chimeIntervalSec: !<float> 4.000000
       chimeVolume: 0.800000
+      chevronWidthCm: 4.500000
+      chevronStrokeCm: 0.700000
   ScriptTypes:
     -
       {}
@@ -70,4 +74,6 @@
     - '// @input float edgeOffsetCm = 10 {"hint":"How far from the view center the arrow sits, in cm (keep inside the display).", "widget":"slider", "min":4, "max":16, "step":0.5}'
     - '// @input float chimeIntervalSec = 4 {"hint":"Seconds between chimes while the prompt is up.", "widget":"slider", "min":2, "max":10, "step":0.5}'
     - '// @input float chimeVolume = 0.8 {"hint":"Chime volume.", "widget":"slider", "min":0, "max":1, "step":0.05}'
+    - '// @input float chevronWidthCm = 4.5 {"hint":"Chevron width in cm.", "widget":"slider", "min":2, "max":8, "step":0.5}'
+    - '// @input float chevronStrokeCm = 0.7 {"hint":"Chevron line width in cm.", "widget":"slider", "min":0.3, "max":1.5, "step":0.1}'
     - '// @ui {"widget":"group_end"}'

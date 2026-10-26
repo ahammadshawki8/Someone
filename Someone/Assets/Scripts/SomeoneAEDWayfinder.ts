@@ -1,7 +1,7 @@
 /**
  * SomeoneAEDWayfinder - points toward the (scripted) AED when it is needed.
  *
- * While shown: a small amber arrow rides the edge of the view, on the side
+ * While shown: a small amber chevron rides the edge of the view, on the side
  * the AED is on, pointing toward it, and a gentle chime plays from the AED's
  * direction (spatial audio on the authored AEDBeacon), repeating calmly.
  *
@@ -9,6 +9,7 @@
  * Must not: decide when the AED prompt appears (state machine does).
  */
 import WorldCameraFinderProvider from "SpectaclesInteractionKit.lspkg/Providers/CameraProvider/WorldCameraFinderProvider"
+import {buildFlatChevron} from "./SomeoneFlatChevron"
 import {SomeoneTweens} from "./SomeoneTween"
 import {SomeoneVisualFade} from "./SomeoneVisualFade"
 
@@ -53,6 +54,16 @@ export class SomeoneAEDWayfinder extends BaseScriptComponent {
   @hint("Chime volume.")
   @widget(new SliderWidget(0, 1, 0.05))
   chimeVolume: number = 0.8
+
+  @input
+  @hint("Chevron width in cm.")
+  @widget(new SliderWidget(2, 8, 0.5))
+  chevronWidthCm: number = 4.5
+
+  @input
+  @hint("Chevron line width in cm.")
+  @widget(new SliderWidget(0.3, 1.5, 0.1))
+  chevronStrokeCm: number = 0.7
   @ui.group_end
 
   private tweens = new SomeoneTweens()
@@ -65,6 +76,16 @@ export class SomeoneAEDWayfinder extends BaseScriptComponent {
   private placed = false
 
   onAwake(): void {
+    if (this.arrow) {
+      // A flat chevron in cm replaces the authored cone; drawn last so the
+      // figure never paints over it.
+      const rmv = this.arrow.getComponent("Component.RenderMeshVisual")
+      if (rmv) {
+        rmv.mesh = buildFlatChevron(this.chevronWidthCm, this.chevronWidthCm * 0.55, this.chevronStrokeCm)
+        rmv.setRenderOrder(100)
+        this.arrow.getTransform().setLocalScale(vec3.one())
+      }
+    }
     this.fade = new SomeoneVisualFade(this.arrow ? this.arrow : this.sceneObject)
     this.fade.setAlpha(0)
     if (this.arrow) this.arrow.enabled = false

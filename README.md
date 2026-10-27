@@ -1,6 +1,6 @@
 # Someone
 
-**Be the someone.**
+**Be the someone who moves first.**
 
 When someone collapses, most people freeze. Someone is a Snap SPECS Lens that guides you through CPR, hands-free, one calm step at a time, with 911 seeing what you see.
 

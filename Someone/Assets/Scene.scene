@@ -1420,7 +1420,7 @@
       handCompression: !<MappingBased.AssignableType_11> d57f8901-171d-4614-88b0-e9923f84a55b
       victimReaction: !<MappingBased.AssignableType_12> 075264ec-d81f-42f6-b851-25b0b9b87838
       viewShare: !<MappingBased.AssignableType_13> 5c63babb-e3e6-4fc8-ac24-b3f343b1e1a4
-      demoMode: true
+      demoMode: false
       placeInFrontOfUser: true
       chestDistanceCm: !<float> 85.000000
       eyeHeightAboveFloorCm: !<float> 75.000000

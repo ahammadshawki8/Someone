@@ -22,7 +22,6 @@ const LINES = [
   ["Y1", "Someone uses everything glasses can do that a phone can't, in a single moment. It shares your view, draws on the world, and leaves both hands free. It was planned with plan lens, built end to end by a coding agent through CLAD and the Lens Studio MCP, and proven by eight LEAF tests in the preview."],
   ["C1", "In a crowd, everyone waits. Be the someone who moves first."]
 ]
-]
 
 const outDir = path.resolve(process.argv[2] || "narration")
 fs.mkdirSync(outDir, {recursive: true})

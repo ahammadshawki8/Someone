@@ -263,7 +263,8 @@ const Build: React.FC = () => {
     "AED prompt and chime at 1:30",
     "Replay counts are exact",
     "Hand-tracked strokes count, tremor does not",
-    "Dispatcher never cut, prompts never stack"
+    "Dispatcher never cut, prompts never stack",
+    "The whole rescue, end to end"
   ]
   const shot = (file: string, caption: string, at: number) => (
     <Rise at={at}>
@@ -287,8 +288,8 @@ const Build: React.FC = () => {
               </div>
             </Rise>
           ))}
-          <Rise at={sec(7.8)}>
-            <div style={{fontSize: 30, color: C.mint, marginTop: 16, fontWeight: 600}}>7 of 7 LEAF scenarios pass</div>
+          <Rise at={sec(8.4)}>
+            <div style={{fontSize: 30, color: C.mint, marginTop: 16, fontWeight: 600}}>8 of 8 LEAF scenarios pass</div>
           </Rise>
         </div>
       </div>

@@ -6,6 +6,15 @@ When someone collapses, most people freeze. Someone is a Snap SPECS Lens that gu
 
 Built for the Devpost "Learn AR with SPECS" hackathon. Planned with the `plan-lens` skill, built by a coding agent through CLAD and the Lens Studio MCP, and checked with LEAF tests in the Lens Studio preview.
 
+| | |
+|---|---|
+| ![Compressions on pace: the ring on the chest turns mint](docs/compress.jpg) | ![AED prompt: point at one person, with a chevron toward the AED](docs/aed.jpg) |
+| **Push.** A target on the sternum at real size; the ring pulses at 110 a minute and turns mint on pace. | **Point at one person.** Never "send someone": a chime and a chevron lead to the AED. |
+| ![AED pads placed on the chest](docs/pads.jpg) | ![Replay: You did not freeze, with four numbers](docs/replay.jpg) |
+| **The AED.** Pads shown where they go, then "Stand clear." | **Replay.** *You did not freeze.* Then the evidence. |
+
+All four frames are the Lens Studio preview, recorded live during the `demo-run-scenario` LEAF run.
+
 ---
 
 ## Who it's for
@@ -64,7 +73,7 @@ Calm, clinical, the opposite of an alarm. The SPECS display is additive (black r
 
 1. **Planned with `plan-lens`.** The skill interviewed the owner one question at a time and wrote [`devpost/design-brief.md`](devpost/design-brief.md) (status: approved) with five done criteria.
 2. **Built by a coding agent through CLAD and the Lens Studio MCP.** Claude Code with the CLAD plugin wrote every TypeScript component, wired the scene, imported assets and drove the preview through the Lens Studio MCP in Lens Studio 5.24.1: `RecompileTypeScriptTool` and `RunAndCollectLogsTool` after every change, `ExecuteEditorCode` and `scene-graphql` for scene edits, `PreviewInteractTool` and `CapturePanelScreenshotTool` to walk each beat from the user's eye, and `run_leaf_scenario` for tests. The agent looked at every beat, found problems (a pace ring that rendered as a filled disc, a clock outside the 32 degree view, an AED arrow painted over by the figure, a replay clipped at the top, dispatcher lines cut mid-sentence) and fixed them in the loop.
-3. **Tested with LEAF.** Seven LEAF scenarios in `Someone/Assets/Scripts/Tests/` drive real SIK pinches in the preview: one per done criterion, plus hand-tracked compressions and the flow rules.
+3. **Tested with LEAF.** Eight LEAF scenarios in `Someone/Assets/Scripts/Tests/` drive real SIK pinches in the preview: one per done criterion, plus hand-tracked compressions, the flow rules, and the whole rescue end to end in demo mode (`DemoRunScenario.ts`, also used to record the demo video).
 4. **Assets made by tools, from scripts.** The manikin is modeled in Blender by `tools/blender/build_manikin.py`, the pace ring and AED chevron are flat meshes built at runtime in centimetres, sound effects are synthesized (`tools/gen_sfx_someone.js`), and the dispatcher voice is generated with Kokoro-82M (`tools/kokoro/gen_dispatcher.mjs`).
 
 | # | Done criterion | Scenario |
@@ -83,7 +92,7 @@ Architecture: one pure-logic state machine (`SomeoneRescueStateMachine`) is the 
 
 **Design: a complete, coherent product, not a proof of concept.** One story from collapse to replay, one instruction at a time (tested). Every element is attached to the task: target and ring on the sternum, the card 30 cm above the chest in the same glance as the hands, status small and low, the out-of-view AED reached by sound and an edge chevron. Your hands push; there is nothing to hold. Four colors, light on the world for an additive display, slow fades, and the ring pulse as the only rhythm. Everything sits inside the 32 by 37 degree Specs view at 0.6 to 1.6 m.
 
-**Technical implementation: CLAD, Lens Studio and the MCP.** A pure-logic rescue state machine is the single source of truth, and every view is passive. Rolling-window rate scoring, a hand-tracking stroke detector with hysteresis, spatial audio from the chest and from the AED's direction, runtime meshes in real centimetres, and a dispatcher that never cuts or lags. Built and verified entirely by the agent through the Lens Studio MCP, with seven LEAF scenarios passing in the preview.
+**Technical implementation: CLAD, Lens Studio and the MCP.** A pure-logic rescue state machine is the single source of truth, and every view is passive. Rolling-window rate scoring, a hand-tracking stroke detector with hysteresis, spatial audio from the chest and from the AED's direction, runtime meshes in real centimetres, and a dispatcher that never cuts or lags. Built and verified entirely by the agent through the Lens Studio MCP, with eight LEAF scenarios passing in the preview, one of them the whole rescue end to end.
 
 **Innovation: designed for the freeze, not for technique.** Prior AR CPR work grades technique on a mannequin. Someone designs against panic (one calm instruction, a voice that is with you) and against the bystander effect (it never asks a crowd; it tells you to point at one person). It combines all three glasses pillars in one moment: hands free on the chest, guidance drawn on the body, and a dispatcher who sees your view.
 

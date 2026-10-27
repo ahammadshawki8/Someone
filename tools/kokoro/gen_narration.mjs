@@ -19,7 +19,7 @@ const LINES = [
   ["N6", "At ninety seconds, a chime and an arrow point to the A E D. And Someone never asks the crowd. It tells you to point at one person. That's how you break the bystander effect."],
   ["N7", "It prompts a swap at two minutes, shows where the pads go, and keeps you clear for the shock."],
   ["N8", "When help arrives, a quiet replay. And one line. You did not freeze."],
-  ["N9", "Someone was planned with the plan lens skill, built end to end by a coding agent through CLAD and the Lens Studio MCP, and checked by seven LEAF tests that run in the preview."],
+  ["N9", "Someone was planned with the plan lens skill, built end to end by a coding agent through CLAD and the Lens Studio MCP, and checked by eight LEAF tests that run in the preview."],
   ["N10", "In a crowd, everyone waits. You won't."]
 ]
 

@@ -47,7 +47,7 @@ CPR needs both hands and your eyes on the person. A phone has to be put down, an
 - **Tools, from scripts.** The manikin is modeled in Blender from a script; the ring and chevron are runtime meshes in centimetres; sound effects are synthesized; the dispatcher voice is Kokoro-82M text to speech.
 - **Hand-tracked compressions.** A stroke detector reads both tracked palms near the sternum: a 2 cm push counts and a 1.5 cm recoil re-arms, so a resting or trembling hand never counts.
 - **One source of truth.** A pure-logic rescue state machine drives every view. A compression tracker computes a rolling rate from the last five intervals; a stats module feeds the replay.
-- **Tested with LEAF.** Seven scenarios pass in the preview: one per done criterion (target starts compressions, rate bands, one card at a time, AED prompt and dismissal, replay accuracy), plus hand-tracked strokes and the flow rules (dispatcher never cut or stale, prompts queue behind each other, the swap pauses scoring).
+- **Tested with LEAF.** Eight scenarios pass in the preview, including the whole rescue end to end: one per done criterion (target starts compressions, rate bands, one card at a time, AED prompt and dismissal, replay accuracy), plus hand-tracked strokes and the flow rules (dispatcher never cut or stale, prompts queue behind each other, the swap pauses scoring).
 - **Spatial audio.** The metronome plays from the chest position and the AED chime from the AED's direction.
 
 ## Stand-ins

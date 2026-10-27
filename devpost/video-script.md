@@ -12,7 +12,7 @@ Narration is generated with Kokoro-82M (`tools/kokoro/gen_narration.mjs`) as a s
 | N6 | The crowd | Preview: AED chevron, "Point at one person." | At ninety seconds, a chime and an arrow point to the A E D. And Someone never asks the crowd. It tells you to point at one person. That's how you break the bystander effect. |
 | N7 | AED | Preview: swap, pads, Stand clear, resume | It prompts a swap at two minutes, shows where the pads go, and keeps you clear for the shock. |
 | N8 | Replay | Preview: replay | When help arrives, a quiet replay. And one line. You did not freeze. |
-| N9 | How it was built | Cards: design brief, the agent in Lens Studio through the MCP, 7 LEAF scenarios passing | Someone was planned with the plan lens skill, built end to end by a coding agent through CLAD and the Lens Studio MCP, and checked by seven LEAF tests that run in the preview. |
+| N9 | How it was built | Cards: design brief, the agent in Lens Studio through the MCP, 8 LEAF scenarios passing | Someone was planned with the plan lens skill, built end to end by a coding agent through CLAD and the Lens Studio MCP, and checked by eight LEAF tests that run in the preview. |
 | N10 | Close | Pulsing ring on black. "In a crowd, everyone waits. You won't." / "Someone. Be the someone." | In a crowd, everyone waits. You won't. |
 
 Stand-ins named on screen: the manikin, the pinch that stands in for a push in the preview, the scripted dispatcher, AED and shock.

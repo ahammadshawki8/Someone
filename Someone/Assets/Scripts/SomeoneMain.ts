@@ -38,6 +38,7 @@ import {SomeoneRateCueUI} from "./SomeoneRateCueUI"
 import {RescueEvent, SomeoneRescueStateMachine} from "./SomeoneRescueStateMachine"
 import {SomeoneReplayUI} from "./SomeoneReplayUI"
 import {SomeoneGlancePlacer} from "./SomeoneGlancePlacer"
+import {SomeoneHandCompression} from "./SomeoneHandCompression"
 
 const TAP_SOUND = requireAsset("../GeneratedSFX/SomeoneTapConfirm.wav") as AudioTrackAsset
 const CONNECT_SOUND = requireAsset("../GeneratedSFX/SomeoneDispatcherConnect.wav") as AudioTrackAsset
@@ -82,6 +83,10 @@ export class SomeoneMain extends BaseScriptComponent {
   @input
   @hint("Scripted dispatcher captions (stand-in).")
   dispatcher: SomeoneDispatcherController
+  @input
+  @allowUndefined
+  @hint("Hand-tracked compressions (real glasses). Pinching the target stays the preview stand-in.")
+  handCompression: SomeoneHandCompression
   @ui.group_end
 
   @ui.separator
@@ -159,9 +164,8 @@ export class SomeoneMain extends BaseScriptComponent {
     this.instructionCard.onAction.add((a: CardAction) => {
       if (this.sm.action(a)) this.play(this.tapAudio)
     })
-    this.chestTarget.onPinch.add(() => {
-      if (this.sm.chestPinched(getTime())) this.chestTarget.pressFeedback()
-    })
+    this.chestTarget.onPinch.add(() => this.onChestPush())
+    if (this.handCompression) this.handCompression.onCompression.add(() => this.onChestPush())
     this.replay.onRestart.add(() => {
       this.play(this.tapAudio)
       this.sm.start()
@@ -186,6 +190,11 @@ export class SomeoneMain extends BaseScriptComponent {
     }
     this.sm.tick(getDeltaTime(), getTime())
     this.clockChip.setTime(this.sm.elapsed)
+  }
+
+  /** One push on the chest, from a pinch (preview) or the tracked hands (glasses). */
+  private onChestPush(): void {
+    if (this.sm.chestPinched(getTime())) this.chestTarget.pressFeedback()
   }
 
   // ---- State machine -> views --------------------------------------------------
@@ -250,6 +259,7 @@ export class SomeoneMain extends BaseScriptComponent {
   private syncWorld(): void {
     const compressing = this.sm.isCompressing
     this.chestTarget.setShown(this.sm.targetVisible)
+    if (this.handCompression) this.handCompression.active = this.sm.targetVisible
     this.paceRing.setShown(compressing)
     if (compressing) this.metronome.startBeat()
     else this.metronome.stopBeat()

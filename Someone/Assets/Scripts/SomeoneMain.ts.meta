@@ -37,6 +37,7 @@
     demoMode: false
     dispatcher: false
     eyeHeightAboveFloorCm: false
+    handCompression: false
     instructionCard: false
     metronome: false
     paceRing: false
@@ -64,6 +65,7 @@
       aedWayfinder: !<MappingBased.AssignableType_8> 00000000-0000-0000-0000-000000000000
       aedPads: !<MappingBased.AssignableType_9> 00000000-0000-0000-0000-000000000000
       dispatcher: !<MappingBased.AssignableType_10> 00000000-0000-0000-0000-000000000000
+      handCompression: !<MappingBased.AssignableType_11> 00000000-0000-0000-0000-000000000000
       demoMode: false
       placeInFrontOfUser: true
       chestDistanceCm: !<float> 85.000000
@@ -88,6 +90,7 @@
     - '// @input AssignableType_8 aedWayfinder {"hint":"AED edge arrow and directional chime."}'
     - '// @input AssignableType_9 aedPads {"hint":"AED pad placement overlay."}'
     - '// @input AssignableType_10 dispatcher {"hint":"Scripted dispatcher captions (stand-in)."}'
+    - '// @input AssignableType_11 handCompression {"hint":"Hand-tracked compressions (real glasses). Pinching the target stays the preview stand-in."}'
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'

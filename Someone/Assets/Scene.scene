@@ -1468,6 +1468,7 @@
       aedWayfinder: !<MappingBased.AssignableType_8> d2b111ec-42f6-4f0e-a1c1-521c70365bb9
       aedPads: !<MappingBased.AssignableType_9> b920830c-9d11-4b77-80f3-6a09ba5014e7
       dispatcher: !<MappingBased.AssignableType_10> e741a426-6a9c-4e4b-8738-204314adc96f
+      handCompression: !<MappingBased.AssignableType_11> d57f8901-171d-4614-88b0-e9923f84a55b
       demoMode: false
       placeInFrontOfUser: true
       chestDistanceCm: !<float> 85.000000
@@ -3034,6 +3035,7 @@
     []
   Components:
     - !<own> 5bccb726-6e6f-4e45-9c8d-9cf636ecd81c
+    - !<own> d57f8901-171d-4614-88b0-e9923f84a55b
 - !<SceneObject/d4a9c5e3-fe96-4824-9b20-59f5ad39eabd>
   PrefabRemaps:
     []
@@ -3053,6 +3055,29 @@
     - !<own> 38562bff-09c5-4232-bff1-7ea62a1e7ec5
   Components:
     []
+- !<ScriptComponent/d57f8901-171d-4614-88b0-e9923f84a55b>
+  PrefabRemaps:
+    []
+  Name: SomeoneHandCompression
+  Enabled: true
+  ScriptAsset: !<reference> 380d688c-d270-43e0-89ef-7792787ed58c
+  ScriptInputsDefault:
+    onChestRadiusCm: true
+    maxHeightAboveChestCm: true
+    pushCm: true
+    recoilCm: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      chestTarget: !<reference.SceneObject> b59f81a4-96f7-4acb-9208-6285a24b6cfa
+      onChestRadiusCm: !<float> 16.000000
+      maxHeightAboveChestCm: !<float> 20.000000
+      pushCm: !<float> 2.000000
+      recoilCm: 1.500000
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/d5f63266-b1ce-419f-847b-3c9f347b3ee2>
   PrefabRemaps:
     []

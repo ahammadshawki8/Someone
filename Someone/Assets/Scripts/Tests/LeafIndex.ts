@@ -8,6 +8,7 @@ import {DoneCriterion2Scenario} from "./DoneCriterion2Scenario"
 import {DoneCriterion3Scenario} from "./DoneCriterion3Scenario"
 import {DoneCriterion4Scenario} from "./DoneCriterion4Scenario"
 import {DoneCriterion5Scenario} from "./DoneCriterion5Scenario"
+import {HandCompressionScenario} from "./HandCompressionScenario"
 
 @component
 export class LeafIndex extends BaseScriptComponent {
@@ -32,6 +33,10 @@ export class LeafIndex extends BaseScriptComponent {
     {
       id: "done-criterion-5-scenario",
       typename: DoneCriterion5Scenario.getTypeName(),
+    },
+    {
+      id: "hand-compression-scenario",
+      typename: HandCompressionScenario.getTypeName(),
     },
   ]
 }

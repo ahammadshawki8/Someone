@@ -41,6 +41,8 @@ import {SomeoneGlancePlacer} from "./SomeoneGlancePlacer"
 import {SomeoneHandCompression} from "./SomeoneHandCompression"
 import {SomeoneVictimReaction} from "./SomeoneVictimReaction"
 import {SomeoneViewShareCue} from "./SomeoneViewShareCue"
+import {SomeoneCollapseHalo} from "./SomeoneCollapseHalo"
+import {SomeonePushRipple} from "./SomeonePushRipple"
 
 const TAP_SOUND = requireAsset("../GeneratedSFX/SomeoneTapConfirm.wav") as AudioTrackAsset
 const CONNECT_SOUND = requireAsset("../GeneratedSFX/SomeoneDispatcherConnect.wav") as AudioTrackAsset
@@ -97,6 +99,14 @@ export class SomeoneMain extends BaseScriptComponent {
   @allowUndefined
   @hint("Viewfinder corners that show the dispatcher now sees your view.")
   viewShare: SomeoneViewShareCue
+  @input
+  @allowUndefined
+  @hint("Ground halo that marks the person from afar until the first push.")
+  collapseHalo: SomeoneCollapseHalo
+  @input
+  @allowUndefined
+  @hint("One ring out from the target per push, in the rate's color.")
+  pushRipple: SomeonePushRipple
   @ui.group_end
 
   @ui.separator
@@ -259,6 +269,9 @@ export class SomeoneMain extends BaseScriptComponent {
 
   private onCompression(r: CompressionResult): void {
     this.paceRing.setGrade(r.grade)
+    if (this.pushRipple) {
+      this.pushRipple.ripple(r.grade === "good" ? PALETTE.mint : r.grade === "amber" ? PALETTE.amber : PALETTE.coral)
+    }
     if (r.direction === null) {
       this.rateCue.clearCue()
     } else if (r.direction === "good") {
@@ -274,6 +287,10 @@ export class SomeoneMain extends BaseScriptComponent {
     const compressing = this.sm.isCompressing
     this.chestTarget.setShown(this.sm.targetVisible)
     if (this.handCompression) this.handCompression.active = this.sm.targetVisible
+    if (this.collapseHalo) {
+      const b = this.sm.baseState
+      this.collapseHalo.setShown(!this.sm.hasStartedCompressions && (b === "Collapse" || b === "Check" || b === "Call" || b === "PlaceHands"))
+    }
     this.paceRing.setShown(compressing)
     if (compressing) this.metronome.startBeat()
     else this.metronome.stopBeat()

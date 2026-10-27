@@ -1,0 +1,54 @@
+- !<AssetImportMetadata/e412cbb7-a58f-433b-ad24-1d1d5ef638e6>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 94dd473c-919f-4555-adf2-6a902ca170d7
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 94dd473c-919f-4555-adf2-6a902ca170d7
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 06b3e84c-479a-4889-8a3d-2353a25dfbcb
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/06b3e84c-479a-4889-8a3d-2353a25dfbcb>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 6c07d77c-9abe-45da-97ec-7c1ac6f6dedd
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    material: false
+    radiiCm: false
+    seconds: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - material: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      radiiCm: !<Vec2> {x: 11.000000, y: 26.000000}
+      seconds: 0.650000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">SomeonePushRipple - a ring per push</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - "// @input Asset.Material material {\"hint\":\"Unlit material that honors alpha (the ring's material works).\"}"
+    - '// @input vec2 radiiCm = {11,26} {"hint":"Start and end radius in cm."}'
+    - '// @input float seconds = 0.65 {"hint":"Seconds a ripple takes to travel out and fade.", "widget":"slider", "min":0.3, "max":1.2, "step":0.05}'

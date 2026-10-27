@@ -1,0 +1,54 @@
+- !<AssetImportMetadata/42f9c191-b242-4f5f-b6bf-cfb8ebcbbaf2>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 8e8d71bf-dec1-4b42-8b5b-f256331cd562
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 8e8d71bf-dec1-4b42-8b5b-f256331cd562
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 779374d9-a0fe-4032-90ae-5c9a8235b2a8
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/779374d9-a0fe-4032-90ae-5c9a8235b2a8>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 6f10a9b3-3b45-455a-b2ca-766ef0117060
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    material: false
+    radiusCm: false
+    widthCm: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - material: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      radiusCm: !<float> 112.000000
+      widthCm: 1.600000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">SomeoneCollapseHalo - the person, marked from afar</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - "// @input Asset.Material material {\"hint\":\"Unlit material that honors alpha (the ring's material works).\"}"
+    - '// @input float radiusCm = 112 {"hint":"Halo radius in cm (around the whole body).", "widget":"slider", "min":60, "max":160, "step":1}'
+    - '// @input float widthCm = 1.6 {"hint":"Line width in cm.", "widget":"slider", "min":0.5, "max":4, "step":0.1}'

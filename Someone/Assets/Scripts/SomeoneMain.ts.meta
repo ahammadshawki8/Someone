@@ -33,6 +33,7 @@
     chestDistanceCm: false
     chestTarget: false
     clockChip: false
+    collapseHalo: false
     cueVolume: false
     demoMode: false
     dispatcher: false
@@ -42,6 +43,7 @@
     metronome: false
     paceRing: false
     placeInFrontOfUser: false
+    pushRipple: false
     rateCue: false
     replay: false
     rescueSpace: false
@@ -70,6 +72,8 @@
       handCompression: !<MappingBased.AssignableType_11> 00000000-0000-0000-0000-000000000000
       victimReaction: !<MappingBased.AssignableType_12> 00000000-0000-0000-0000-000000000000
       viewShare: !<MappingBased.AssignableType_13> 00000000-0000-0000-0000-000000000000
+      collapseHalo: !<MappingBased.AssignableType_14> 00000000-0000-0000-0000-000000000000
+      pushRipple: !<MappingBased.AssignableType_15> 00000000-0000-0000-0000-000000000000
       demoMode: false
       placeInFrontOfUser: true
       chestDistanceCm: !<float> 85.000000
@@ -97,6 +101,8 @@
     - '// @input AssignableType_11 handCompression {"hint":"Hand-tracked compressions (real glasses). Pinching the target stays the preview stand-in."}'
     - "// @input AssignableType_12 victimReaction {\"hint\":\"The person's chest gives under each push (stand-in figure).\"}"
     - '// @input AssignableType_13 viewShare {"hint":"Viewfinder corners that show the dispatcher now sees your view."}'
+    - '// @input AssignableType_14 collapseHalo {"hint":"Ground halo that marks the person from afar until the first push."}'
+    - "// @input AssignableType_15 pushRipple {\"hint\":\"One ring out from the target per push, in the rate's color.\"}"
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'

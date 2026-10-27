@@ -137,10 +137,19 @@ export class SomeoneReplayUI extends BaseScriptComponent {
 
   showReplay(stats: StatsSnapshot): void {
     this.last = stats
-    this.totalValue.text = "" + stats.totalCompressions
-    this.paceValue.text = stats.onPacePercent + "%"
-    this.streakValue.text = "" + stats.longestStreak
     this.firstValue.text = stats.timeToFirstSec >= 0 ? SomeoneReplayUI.fmt(stats.timeToFirstSec) : "-"
+    // The numbers count up as the replay settles in.
+    this.tweens.run(
+      "count",
+      1.4,
+      (t) => {
+        this.totalValue.text = "" + Math.round(stats.totalCompressions * t)
+        this.paceValue.text = Math.round(stats.onPacePercent * t) + "%"
+        this.streakValue.text = "" + Math.round(stats.longestStreak * t)
+      },
+      undefined,
+      "ease-out-sine"
+    )
     this.setShown(true)
   }
 

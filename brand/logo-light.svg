@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 140" width="560" height="140">
+  <title>Someone</title>
+  <circle cx="70" cy="70" r="44" fill="none" stroke="#FF5A4E" stroke-width="5.5"/>
+  <circle cx="70" cy="70" r="12.5" fill="#FF5A4E"/>
+  <text x="140" y="92" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="600" font-size="72" letter-spacing="-2" fill="#0B0B0C">someone</text>
+</svg>

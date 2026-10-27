@@ -25,6 +25,8 @@ D = LocationService.get_user_data()
 TEX_MAX = 1024
 COMPRESS_DEPTH = 0.03  # meters; a visual cue only, never reported as depth
 COMPRESS_SIGMA = 0.085
+ARM_DROP_DEG = float(os.environ.get("ARM_DROP_DEG", "28"))  # along the floor, toward the hips
+ELBOW_DEG = float(os.environ.get("ELBOW_DEG", "8"))
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
 
@@ -35,6 +37,8 @@ basemesh = HumanService.create_human(mask_helpers=True, detailed_helpers=False, 
                                      feet_on_ground=True, scale=0.1, macro_detail_dict=macro)
 HumanService.set_character_skin(os.path.join(D, "skins/middleage_caucasian_male/middleage_caucasian_male.mhmat"),
                                 basemesh, skin_type="GAMEENGINE")
+# A skeleton, so the arms can fall naturally beside the body (clothes follow it).
+rig = HumanService.add_builtin_rig(basemesh, "default")
 for rel, kind in [
     ("eyes/low-poly/low-poly.mhclo", "Eyes"),
     ("eyebrows/eyebrow001/eyebrow001.mhclo", "Eyebrows"),
@@ -44,9 +48,11 @@ for rel, kind in [
 ]:
     try:
         HumanService.add_mhclo_asset(os.path.join(D, rel), basemesh, asset_type=kind, subdiv_levels=0,
-                                     material_type="MAKESKIN", set_up_rigging=False)
+                                     material_type="MAKESKIN", set_up_rigging=True)
     except Exception as e:  # keep going without an optional asset
         print("ASSET_FAIL", rel, e)
+
+# The rig stays at rest; its skinning weights become the arm masks below.
 
 # Apply every modifier (fitting, helper mask), then join into one mesh.
 meshes = [o for o in bpy.context.scene.objects if o.type == "MESH"]
@@ -90,6 +96,47 @@ for v in vs:
 top = max(v.co.z for v in vs if abs(v.co.x) < 0.03 and abs(v.co.y) < 0.03)
 print("HEIGHT", round(height, 3), "CHEST_TOP_AT_STERNUM", round(top, 4))
 
+# Collapsed pose: swing each arm down along the floor toward the hips, about
+# the shoulder, blended by the rig's arm weights so the shoulder and sleeve
+# bend smoothly. The wearer's left (".L") lies on +y.
+ARM_PARTS = ("upperarm", "lowerarm", "wrist", "finger", "metacarpal", "thumb", "hand", "palm")
+for side, sign in (("L", 1.0), ("R", -1.0)):
+    gids = [g.index for g in body.vertex_groups
+            if g.name.endswith("." + side) and any(p in g.name.lower() for p in ARM_PARTS)]
+    if not gids:
+        print("ARM_GROUPS_NOT_FOUND", side)
+        continue
+    w = {}
+    for v in vs:
+        s = sum(g.weight for g in v.groups if g.group in gids)
+        if s > 0.001:
+            w[v.index] = min(1.0, s)
+    ring = [vs[i].co for i, k in w.items() if 0.35 < k < 0.65]
+    if not ring:
+        continue
+    px = sum(c.x for c in ring) / len(ring)
+    py = sum(c.y for c in ring) / len(ring)
+    for i, k in w.items():
+        a = -sign * math.radians(ARM_DROP_DEG) * k
+        c = vs[i].co
+        dx, dy = c.x - px, c.y - py
+        c.x = px + dx * math.cos(a) - dy * math.sin(a)
+        c.y = py + dx * math.sin(a) + dy * math.cos(a)
+    print("ARM_SWUNG", side, len(w), "pivot", round(px, 3), round(py, 3))
+
+    # Let the arm rest on the ground: lower it progressively from the shoulder
+    # (no change) to the hand (wrist down to about 4 cm above the floor).
+    far = max(w, key=lambda i: math.hypot(vs[i].co.x - px, vs[i].co.y - py))
+    reach = math.hypot(vs[far].co.x - px, vs[far].co.y - py)
+    hand = [vs[i].co for i, k in w.items() if k > 0.95 and math.hypot(vs[i].co.x - px, vs[i].co.y - py) > 0.8 * reach]
+    hand_z = sum(c.z for c in hand) / max(1, len(hand))
+    drop = max(0.0, hand_z - 0.05)
+    for i, k in w.items():
+        c = vs[i].co
+        along = min(1.0, math.hypot(c.x - px, c.y - py) / max(reach, 1e-4))
+        c.z -= drop * along * k
+    print("ARM_LOWERED", side, round(drop, 3))
+
 
 def surface_z(x, y, r=0.025):
     zs = [v.co.z for v in vs if abs(v.co.x - x) < r and abs(v.co.y - y) < r]
@@ -124,7 +171,7 @@ for img in bpy.data.images:
     us, ws_ = [], []
     for poly in body.data.polygons:
         c = poly.center
-        if poly.material_index != shirt_slot or not (-0.24 < c.x < 0.0 and 0.0 < c.y < 0.17 and c.z > 0.17):
+        if poly.material_index != shirt_slot or not (-0.26 < c.x < 0.04 and 0.0 < c.y < 0.2 and c.z > 0.15):
             continue
         for li in poly.loop_indices:
             uv = uv_layer.data[li].uv
@@ -174,8 +221,8 @@ if PREVIEW:
     scene.collection.objects.link(sun)
     cam = bpy.data.objects.new("cam", bpy.data.cameras.new("cam"))
     scene.collection.objects.link(cam)
-    cam.location = (0.35, 0.9, 1.6)
-    target = Vector((0.3, 0.0, 0.1))
+    cam.location = (0.4, 2.4, 0.9)
+    target = Vector((0.4, 0.0, 0.1))
     cam.rotation_euler = (target - cam.location).to_track_quat("-Z", "Y").to_euler()
     cam.data.lens = 35
     scene.camera = cam

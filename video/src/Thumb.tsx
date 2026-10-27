@@ -40,6 +40,60 @@ const Base: React.FC<{style?: React.CSSProperties}> = ({style}) => (
   />
 )
 
+/** A light sweep across one region: the bright text pixels of the poster are
+ *  keyed out (alpha = 4G - 3, so white and mint letters only), blurred into a
+ *  soft mint glow, and revealed through a moving band. The background is never
+ *  touched. Off outside [start, start + dur]. */
+const Shine: React.FC<{id: string; f: number; x0: number; y0: number; x1: number; y1: number; start: number; dur: number}> = ({
+  id,
+  f,
+  x0,
+  y0,
+  x1,
+  y1,
+  start,
+  dur
+}) => {
+  if (f < start || f > start + dur) return null
+  const l = sx(x0)
+  const t = sy(y0)
+  const w = sx(x1) - l
+  const h = sy(y1) - t
+  const pos = interpolate(f, [start, start + dur], [-0.3, 1.3], {...clamp, easing: Easing.inOut(Easing.sin)})
+  const bx = l + w * pos
+  return (
+    <g>
+      <defs>
+        <clipPath id={`clip-${id}`}>
+          <rect x={l} y={t} width={w} height={h} />
+        </clipPath>
+        <filter id={`key-${id}`} x={l - 10} y={t - 10} width={w + 20} height={h + 20} filterUnits="userSpaceOnUse">
+          <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 4 0 0 -3" result="txt" />
+          <feGaussianBlur in="txt" stdDeviation="4" result="soft" />
+          <feFlood floodColor="#9DFFD6" result="tint" />
+          <feComposite in="tint" in2="soft" operator="in" result="glow" />
+          <feMerge>
+            <feMergeNode in="glow" />
+            <feMergeNode in="glow" />
+            <feMergeNode in="txt" />
+          </feMerge>
+        </filter>
+        <linearGradient id={`band-${id}`} gradientUnits="userSpaceOnUse" x1={bx - 70} y1={t} x2={bx + 70} y2={t + h * 0.35}>
+          <stop offset="0" stopColor="#fff" stopOpacity="0" />
+          <stop offset="0.5" stopColor="#fff" stopOpacity="1" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
+        </linearGradient>
+        <mask id={`mask-${id}`} maskUnits="userSpaceOnUse" x={l - 10} y={t - 10} width={w + 20} height={h + 20}>
+          <rect x={l - 10} y={t - 10} width={w + 20} height={h + 20} fill={`url(#band-${id})`} />
+        </mask>
+      </defs>
+      <g clipPath={`url(#clip-${id})`} mask={`url(#mask-${id})`}>
+        <image href={staticFile("thumb/poster.png")} x={0} y={OFFSET_Y} width={THUMB_W} height={SRC_H * K} filter={`url(#key-${id})`} />
+      </g>
+    </g>
+  )
+}
+
 export const Thumb: React.FC = () => {
   const f = useCurrentFrame()
   const b = f % THUMB_BEAT
@@ -68,6 +122,13 @@ export const Thumb: React.FC = () => {
 
   // 911 dot: on for 4 beats, off for 2 (seamless over the 6-beat loop).
   const dotOn = Math.floor(f / THUMB_BEAT) % 3 !== 2
+
+  // The coral dot in "someone" beats with the pushes, like the brand mark.
+  const dx = sx(438.5)
+  const dy = sy(301)
+  const dr = sx(12.5)
+  const beatR = interpolate(b, [0, THUMB_BEAT - 1], [dr * 1.15, dr * 3.1], clamp)
+  const beatA = interpolate(b, [0, 1, THUMB_BEAT - 1], [0, 0.9, 0], clamp)
 
   // AED chevron nudge: once per loop.
   const nudge = interpolate(f, [0, 10, 26, THUMB_FRAMES], [0, 7, 0, 0], {...clamp, easing: Easing.inOut(Easing.sin)})
@@ -114,6 +175,19 @@ export const Thumb: React.FC = () => {
           style={{position: "absolute", left: -sx(1262) + nudge, top: OFFSET_Y - sy(462), width: THUMB_W, height: SRC_H * K}}
         />
       </div>
+      {/* title, tagline and glasses: staggered light sweeps */}
+      <svg width={THUMB_W} height={THUMB_H} style={{position: "absolute", left: 0, top: 0}}>
+        <Shine id="title" f={f} x0={70} y0={255} x1={630} y1={348} start={0} dur={22} />
+        <Shine id="line1" f={f} x0={70} y0={375} x1={495} y1={445} start={14} dur={20} />
+        <Shine id="line2" f={f} x0={70} y0={435} x1={375} y1={512} start={24} dur={20} />
+        <Shine id="glasses" f={f} x0={140} y0={148} x1={355} y1={230} start={42} dur={18} />
+      </svg>
+
+      {/* coral dot heartbeat */}
+      <svg width={THUMB_W} height={THUMB_H} style={{position: "absolute", left: 0, top: 0}}>
+        <circle cx={dx} cy={dy} r={beatR} fill="none" stroke={CORAL} strokeWidth={2} opacity={beatA} />
+        <circle cx={dx} cy={dy} r={dr * (1 + 0.22 * p)} fill={CORAL} opacity={0.9 * p} />
+      </svg>
     </AbsoluteFill>
   )
 }

@@ -69,6 +69,40 @@ Calm, clinical, the opposite of an alarm. The SPECS display is additive (black r
 - Slow 300 to 500 ms fades. The ring pulse is the only rhythmic motion.
 - Content sits 0.6 to 1.6 m away and below eye level, clustered around the chest. The card floats about 30 cm above the chest so hands and words share one glance.
 
+## Architecture: how Snap's tools built and run Someone
+
+```mermaid
+flowchart LR
+    subgraph Plan
+        PL[plan-lens skill<br/>one-question interview] --> BR[design-brief.md<br/>5 done criteria]
+    end
+    subgraph Build["Build: Claude Code + CLAD"]
+        AG[coding agent] -->|scene-graphql<br/>ExecuteEditorCode| LS[Lens Studio 5.24]
+        AG -->|RecompileTypeScriptTool<br/>RunAndCollectLogsTool| LS
+        LS -->|PreviewInteractTool<br/>CapturePanelScreenshotTool| AG
+    end
+    subgraph Run["Run: the Lens"]
+        HT[SIK HandInputData<br/>tracked palms] --> SD[StrokeDetector]
+        PI[SIK Interactable<br/>pinch stand-in] --> SM
+        SD --> SM[RescueStateMachine<br/>single source of truth]
+        SM --> V1[Target, pace ring,<br/>chest reaction]
+        SM --> V2[UI Kit card, clock,<br/>replay]
+        SM --> V3[Spatial audio:<br/>metronome, AED chime,<br/>dispatcher voice]
+    end
+    subgraph Test["Test: LEAF"]
+        LF[8 scenarios<br/>run_leaf_scenario]
+    end
+    BR --> AG
+    LS --> Run
+    Run --> LF
+    LF -->|see and fix| AG
+```
+
+- **Plan.** The `plan-lens` skill from the Devpost Learn pack turned the idea into an approved brief with five done criteria that the preview can check.
+- **Build.** Claude Code with the CLAD plugin built the whole Lens through the Lens Studio MCP. Scene and asset edits went through `scene-graphql` and `ExecuteEditorCode`, which also imported the Blender-built human and set materials. Every code change was followed by `RecompileTypeScriptTool` and `RunAndCollectLogsTool`. `PreviewInteractTool` pressed buttons and moved a simulated palm, `MovePreviewCamera` stood where a user would, and `CapturePanelScreenshotTool` let the agent look at each beat and fix what it saw.
+- **Run.** One pure-logic state machine drives everything. Spectacles Interaction Kit supplies tracked hands (palms on the chest feed a stroke detector) and the pinch stand-in. Spectacles UI Kit draws the card and buttons. Spatial audio places the metronome at the chest and the AED chime in the AED's direction.
+- **Test.** Eight LEAF scenarios run in the preview with `run_leaf_scenario`: one per done criterion, plus hand-tracked strokes, the flow rules, and the whole rescue end to end, which also drove the demo video recording.
+
 ## How it was built
 
 1. **Planned with `plan-lens`.** The skill interviewed the owner one question at a time and wrote [`devpost/design-brief.md`](devpost/design-brief.md) (status: approved) with five done criteria.

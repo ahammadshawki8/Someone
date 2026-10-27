@@ -42,6 +42,8 @@ CPR needs both hands and your eyes on the person. A phone has to be put down, an
 
 ## How we built it
 
+See the architecture diagram in the README. In short: plan-lens wrote the brief, Claude Code with CLAD built every part of the Lens through the Lens Studio MCP and checked its own work in the preview, and eight LEAF tests prove the rules end to end.
+
 - **Planned with `plan-lens`.** The skill interviewed us one question at a time and produced an approved design brief with five done criteria, each checkable in the preview.
 - **Built through CLAD and the Lens Studio MCP.** Claude Code with CLAD wrote every TypeScript component, wired the scene and imported assets through the MCP in Lens Studio 5.24.1. It recompiled, read runtime logs, walked each beat from the user's eye with simulated pinches and screenshots, and fixed what it saw: a pace ring that rendered as a filled disc, a clock outside the view, an AED arrow painted over by the figure, a clipped replay, dispatcher lines cut mid-sentence.
 - **Tools, from scripts.** The manikin is modeled in Blender from a script; the ring and chevron are runtime meshes in centimetres; sound effects are synthesized; the dispatcher voice is Kokoro-82M text to speech.

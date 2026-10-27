@@ -26,7 +26,7 @@ TEX_MAX = 1024
 COMPRESS_DEPTH = 0.03  # meters; a visual cue only, never reported as depth
 COMPRESS_SIGMA = 0.085
 ARM_DROP_DEG = float(os.environ.get("ARM_DROP_DEG", "28"))  # along the floor, toward the hips
-ELBOW_DEG = float(os.environ.get("ELBOW_DEG", "8"))
+SHIRT_GREY = 0.46  # median shirt brightness (0..1)
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
 
@@ -193,6 +193,19 @@ for img in bpy.data.images:
     img.pixels[:] = px.ravel()
     img.update()
     print("LOGO_REMOVED", (x0, y0, x1, y1), shirt)
+
+    # Heather grey, not white: the mint on-pace ring must stand out against
+    # the shirt. Only the near-white, unsaturated cloth changes (the blue
+    # jeans in the same texture are saturated, so they stay). Shading kept.
+    rgb = px[..., :3]
+    sat = rgb.max(axis=2) - rgb.min(axis=2)
+    lum = rgb.mean(axis=2)
+    cloth = (sat < 0.09) & (lum > 0.5)
+    rgb[cloth] = rgb[cloth] * (SHIRT_GREY / max(float(np.median(lum[cloth])), 1e-3))
+    px[..., :3] = np.clip(rgb, 0.0, 1.0)
+    img.pixels[:] = px.ravel()
+    img.update()
+    print("SHIRT_GREY", int(cloth.sum()), "pixels")
 
 # Keep textures light for the Lens.
 for img in bpy.data.images:

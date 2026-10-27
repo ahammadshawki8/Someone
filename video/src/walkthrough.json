@@ -1,53 +1,55 @@
 [
   {
-    "id": "wide",
+    "id": "approach",
     "src": "footage/approach.mp4",
     "from": 1.0,
-    "to": 7.0,
-    "rate": 1,
+    "to": 19.0,
+    "rate": 2.0,
     "chapter": "01  SEE",
     "title": "Someone is down.",
-    "sub": "From across the plaza, the Lens has already seen it. One card, above the person.",
-    "pillars": [0]
-  },
-  {
-    "id": "closer",
-    "src": "footage/approach.mp4",
-    "from": 12.0,
-    "to": 17.0,
-    "rate": 1,
-    "chapter": "01  SEE",
-    "title": "You are the closest.",
-    "sub": "Everything stays on the person, where you are already looking.",
-    "pillars": [0, 1]
+    "sub": "From across the plaza, the Lens marks him and gives you the first step.",
+    "nar": "W0",
+    "narDelay": 0.4,
+    "pillars": [
+      0,
+      1
+    ]
   },
   {
     "id": "call",
     "src": "footage/call.mp4",
     "from": 0.5,
-    "to": 15.5,
+    "to": 13.5,
     "rate": 1,
     "chapter": "02  CHECK AND CALL",
     "title": "One calm step at a time.",
     "sub": "Check them. Call 911. The dispatcher connects and sees your view.",
     "nar": "W1",
     "narDelay": 0.4,
-    "pillars": [0]
+    "pillars": [
+      0
+    ]
   },
   {
     "id": "push",
     "src": "footage/demo.mp4",
     "from": 14.0,
-    "to": 30.0,
+    "to": 28.0,
     "rate": 1,
     "chapter": "03  PUSH",
     "title": "The guide is drawn on the body.",
     "sub": "A target on the sternum at real size. The chest gives under every push. The ring holds you at 110 a minute.",
     "nar": "W2",
     "narDelay": 0.4,
-    "pillars": [1, 2],
+    "pillars": [
+      1,
+      2
+    ],
     "hands": true,
-    "beats": [0.6, 16.0]
+    "beats": [
+      0.6,
+      14.0
+    ]
   },
   {
     "id": "aed",
@@ -60,34 +62,49 @@
     "sub": "A chime and an arrow lead to the AED. Point at one person.",
     "nar": "W3",
     "narDelay": 0.4,
-    "pillars": [1, 2],
-    "beats": [0, 11.0],
-    "chimes": [1.6, 5.6, 9.6]
+    "pillars": [
+      1,
+      2
+    ],
+    "beats": [
+      0,
+      11.0
+    ],
+    "chimes": [
+      1.6,
+      5.6,
+      9.6
+    ]
   },
   {
     "id": "pads",
     "src": "footage/demo.mp4",
     "from": 66.0,
     "to": 86.0,
-    "rate": 2,
+    "rate": 2.2,
     "chapter": "05  AED",
     "title": "Swap. Pads. Stand clear.",
     "sub": "A rescuer swap at two minutes, pads shown on the chest, and a simulated shock.",
     "nar": "W4",
     "narDelay": 0.3,
-    "pillars": [1, 2]
+    "pillars": [
+      1,
+      2
+    ]
   },
   {
     "id": "replay",
     "src": "footage/demo.mp4",
-    "from": 92.5,
-    "to": 103.5,
+    "from": 93.0,
+    "to": 102.0,
     "rate": 1,
     "chapter": "06  REPLAY",
     "title": "You did not freeze.",
     "sub": "Compressions, time on pace, best streak and time to first push.",
     "nar": "W5",
     "narDelay": 0.4,
-    "pillars": [0]
+    "pillars": [
+      0
+    ]
   }
 ]

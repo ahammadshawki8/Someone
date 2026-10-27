@@ -13,14 +13,16 @@ const FFMPEG = process.env.FFMPEG || "C:/ffmpeg/bin/ffmpeg.exe"
 const LINES = [
   ["H1", "Every day, someone collapses in a crowd. And every time, the crowd does the same thing. It waits."],
   ["P1", "In the US alone, more than two hundred and sixty thousand people a year go into cardiac arrest outside a hospital. Fewer than half get CPR from a bystander. And it isn't because people don't know how. Of trained bystanders who didn't help, thirty seven percent said they simply panicked. Every minute without CPR, the chance of survival drops by about ten percent."],
-  ["S1", "The problem isn't knowledge. It's the freeze. So we built Someone. A Lens for Snap Specs that turns a frozen bystander into the someone."],
+  ["S1", "The problem isn't knowledge. It's the freeze. So we built Someone. A Lens for Snap Specs that breaks the freeze, and turns a bystander into the someone who acts first."],
+  ["W0", "You see someone go down. Before the crowd decides what to do, the Lens marks him, and gives you the first step."],
   ["W1", "It gives you one calm instruction at a time. Check them. Call nine one one. The dispatcher connects, and sees exactly what you see."],
   ["W2", "Then it draws the guide on the body. A target at the center of the chest, at real size. Your hands push, the glasses count every stroke, and the ring keeps you at a hundred and ten a minute."],
   ["W3", "When the A E D is needed, Someone never asks the crowd. It tells you to point at one person. That is how you break the bystander effect."],
   ["W4", "It calls the swap, shows where the pads go, and keeps you clear for the shock."],
   ["W5", "And when help arrives, it tells you the one thing you need to hear."],
-  ["Y1", "Someone uses everything glasses can do that a phone can't, in a single moment. It shares your view, draws on the world, and leaves both hands free. It was planned with plan lens, built end to end by a coding agent through CLAD and the Lens Studio MCP, and proven by eight LEAF tests in the preview."],
-  ["C1", "In a crowd, everyone waits. Be the someone who moves first."]
+  ["R1", "On real Specs, nothing here needs a tap. Hand tracking counts every push, the guide stays on the chest, and your eyes never leave the person."],
+  ["A1", "Here is how we built it. The plan lens skill turned the idea into a design brief with five testable rules. Claude Code, with CLAD, built every part of the Lens through the Lens Studio MCP. It wrote the scripts, wired the scene, then ran the preview, read the logs, and looked at every screen, fixing what it saw. Eight LEAF tests prove the rules, end to end."],
+  ["C1", "Immediate CPR can double, even triple, the chance of survival. The difference is one person who moves. Be the someone who moves first."]
 ]
 
 const outDir = path.resolve(process.argv[2] || "narration")

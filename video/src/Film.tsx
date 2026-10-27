@@ -419,7 +419,7 @@ const Why: React.FC<{len: number}> = () => {
     <AbsoluteFill style={{background: C.ink, fontFamily, color: C.white}}>
       <div style={{position: "absolute", top: 170, left: 0, right: 0, display: "flex", justifyContent: "center", gap: 60}}>
         {PILLARS.map((p, i) => (
-          <Rise key={p} at={at(0.08 + i * 0.07)} style={{width: 420, borderTop: `2px solid ${C.mint}`, paddingTop: 20}}>
+          <Rise key={p} at={at(0.0) + i * 9} style={{width: 420, borderTop: `2px solid ${C.mint}`, paddingTop: 20}}>
             <div style={{fontSize: 36, fontWeight: 600}}>{p}</div>
             <div style={{fontSize: 22, color: C.dim, marginTop: 8}}>
               {["the dispatcher sees through your eyes", "the guide sits on the chest, at real size", "both hands on the chest, eyes on the person"][i]}
@@ -427,7 +427,7 @@ const Why: React.FC<{len: number}> = () => {
           </Rise>
         ))}
       </div>
-      <Rise at={at(0.3)} style={{position: "absolute", top: 380, left: 0, right: 0, textAlign: "center"}}>
+      <Rise at={at(0.0) + 36} style={{position: "absolute", top: 380, left: 0, right: 0, textAlign: "center"}}>
         <div style={{fontSize: 30, color: C.mint, fontWeight: 600}}>All three, in one moment.</div>
       </Rise>
       <div style={{position: "absolute", top: 480, left: 0, right: 0, display: "flex", justifyContent: "center", gap: 70, alignItems: "flex-start"}}>

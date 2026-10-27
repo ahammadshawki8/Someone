@@ -17,7 +17,7 @@ const LINES = [
   ["00_connected", "Nine one one. I'm with you, and I can see what you see."],
   ["01_placeHands", "Put the heel of your hand on the center of their chest."],
   ["02_firstCompression", "Good. Push hard and fast, with the beat."],
-  ["03_aedPrompt", "Point at someone and send them for the A E D."],
+  ["03_aedPrompt", "Don't ask the crowd. Point at one person and say: you, get the A E D."],
   ["04_sent", "Help is on the way. Keep going."],
   ["05_swap", "If someone can take over, switch now. Keep the rhythm."],
   ["06_aedArrives", "The A E D will guide the shock. Pads go where shown."],

@@ -92,7 +92,7 @@ Someone is an augmented reality Lens for Snap SPECS that turns a frozen bystande
 5. **Check and call**: "Tap their shoulder. Are they breathing?" then a large "Call 911" button.
 6. **Dispatcher sees what you see**: indicator "Dispatcher connected, viewing" + scripted dispatcher voice and captions (stand-in for real video-assisted dispatch).
 7. **Four-minute clock**: small, low in view, shows time since collapse. Never in the center.
-8. **AED wayfinding**: at ~1:30, spatial chime + arrow behind/beside the user: "AED, 40 m. Send someone." Pinch to confirm sent.
+8. **AED wayfinding**: at ~1:30, spatial chime + arrow behind/beside the user: "AED, 40 m. Point at one person." (bystander effect: never "send someone"). Pinch to confirm sent.
 9. **Rescuer swap**: at 2:00, "Switch with a helper if you can." Pauses scoring for the handoff.
 10. **AED arrives**: guided pad placement overlay on the figure, "Stand clear" prompt.
 11. **Replay summary**: total compressions, % on pace, longest on-pace streak, time to first compression, and *You did not freeze.*
@@ -101,7 +101,7 @@ Someone is an augmented reality Lens for Snap SPECS that turns a frozen bystande
 12. **Practice mode** with a pillow/virtual mannequin and a score history in-session.
 13. **Accessibility**: captions for every audio cue, haptic-style visual pulse for hard-of-hearing users, left/right-hand option.
 14. **Comfort**: all content 0.6 to 1.6 m away, slightly below eye level, no dark-only visuals (black renders transparent).
-15. **Real-hardware path (not in done criteria, "feel unproven")**: hand-tracking wrist displacement to estimate compression depth (target 5 to 6 cm), voice commands ("call 911"), real ASR captions of the dispatcher.
+15. **Real-hardware path (not in done criteria, "feel unproven")**: hand-tracked compressions are BUILT (`SomeoneHandCompression` + `SomeoneStrokeDetector`, LEAF `hand-compression-scenario`; counts pushes, never claims depth). Still open: voice commands ("call 911"), real ASR captions of the dispatcher.
 
 ### 5b. Design direction
 - **Mood:** calm, clinical, premium. The opposite of an alarm. References: Apple Health / Emergency SOS clarity, Teenage Engineering restraint, Dieter Rams "less but better".
@@ -388,6 +388,9 @@ Four equally weighted criteria. **Tie-break order: Design first**, then Technica
 | 2026-10-27 | Pace ring is a runtime flat annulus (0.8 cm line, 11 cm radius, `SomeoneFlatRing`); hand target 10 cm with a 2.5 cm dot | The torus primitive rendered as a 26 cm filled coral disc that buried the target. A thin ring is the "less but better" read |
 | 2026-10-27 | AED arrow is a flat amber chevron (`SomeoneFlatChevron`) drawn last; pads draw after the figure | The cone was painted over by the figure and read as a glitch; pads were notched by the chest surface |
 | 2026-10-27 | Clock chip moved from beside the head to the lower left of the view, above the body silhouette | Old spot was about 30 degrees off center, outside the Specs display |
+| 2026-10-27 | Dispatcher voice regenerated with Kokoro-82M (Apache 2.0); lines now hold until fully spoken | Owner OK'd free-license TTS; old clips had unknown provenance; queued lines used to cut speech mid-sentence |
+| 2026-10-27 | Hand-tracked compressions (palm stroke detector) added; pinch stays as the preview stand-in | Counting a pinch per push contradicted "both hands compress"; biggest Design/Technical hole in the audit. Logic proven by LEAF, live with a simulated palm; feel unproven |
+| 2026-10-27 | AED card "Point at one person." and dispatcher "Don't ask the crowd..." replace "Send someone." | The product's thesis is the bystander effect; asking a crowd to "send someone" is the exact trap. Addressing one person is the standard counter |
 
 ---
 
@@ -396,7 +399,9 @@ Four equally weighted criteria. **Tie-break order: Design first**, then Technica
 - **Start Claude Code in:** `C:\Users\Shawki\Desktop\Specs\Someone\Someone` with Lens Studio open first. Starting anywhere else means no `lens-studio` MCP.
 - **Git push:** the active `gh` account on this PC is another user. Push with the owner's token per command: `T=$(gh auth token -u ahammadshawki8); git -c credential.helper= -c "credential.helper=!f() { echo username=ahammadshawki8; echo password=$T; }; f" push`. Do not switch the global gh account.
 - **If Lens Studio opens an untitled project:** the MCP sees "no TypeScript files". Open ours from the agent with `pluginSystem.findInterface(Editor.Model.IModel).openProject(new Editor.Path(".../Someone/Someone.esproj"))`. Delete a stale `Someone.esproj.*.lock` first if its PID (line 1) is dead.
-- **Phase:** Tiers 0 to 3 built and re-verified 2026-10-27 (all 5 LEAF scenarios pass, no runtime errors). Tier 4 polish pass 1 done (see Decision Log 2026-10-27): manikin proportions, thin pace ring, palm-size target, visible clock, flat AED chevron, pads seated, card line breaks.
+- **Phase:** Tiers 0 to 3 built and re-verified 2026-10-27. Tier 4 polish pass 1 done, Kokoro dispatcher voice, hand-tracked compressions, bystander-effect AED copy. 6 LEAF scenarios pass (5 done criteria + hand compression), no runtime errors.
+- **Owner priority (2026-10-27):** finish the Lens end to end and max the rubric before any video/Devpost work.
 - **Preview walkthrough tips:** the UI Kit button's child `Collider` makes PreviewInteract report "obstructed" by uniqueId; pinch its world position instead (query `nameContains:"Collider"`). The preview camera drifts a few cm on each refresh, so re-query positions. Long `Wait` batches over ~60 s hit the MCP transport timeout; split them. To reach late beats fast, flip `SomeoneMain.demoMode` in the editor, then flip it back before saving.
-- **Next action (MCP session):** Tier 4 pass 2: listen to sound (metronome warmth, chime, dispatcher clips), check Replay layout at the user's eye pose, captions placement during compressions, motion review of target bloom and card fades. Then record a terminal or LEAF-panel capture of all 5 scenarios passing. Then Tier 5 (video + Devpost).
-- **Open questions:** dispatcher voice clip provenance (which TTS made `GeneratedSFX/Dispatcher/*.wav`, and is its license OK for a public video? If unknown, re-record with the owner's voice or a clearly licensed local TTS); final closing tagline (current: *In a crowd, everyone waits. You won't.*); voiceover by owner or TTS.
+- **Next action (MCP session):** rubric pass 2: target brightens when palms are on the chest (hand feedback); check Replay layout at the user's eye pose; motion review (ring pulse, target bloom, card fades); metronome and chime sound check; extra LEAF coverage (prompt queue, swap pauses scoring, dispatcher never cut). Video and Devpost come last.
+- **Dispatcher voice:** Kokoro-82M (Apache 2.0), voice `af_heart`, regenerate with `cd tools/kokoro && npm install && node gen_dispatcher.mjs` after editing lines (keep in sync with `DISPATCHER_LINES`).
+- **Open questions:** final closing tagline (current: *In a crowd, everyone waits. You won't.*); voiceover by owner or TTS.

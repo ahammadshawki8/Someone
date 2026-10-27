@@ -110,7 +110,8 @@ export const CARD_COPY: Record<RescueStateName, CardContent> = {
   Call: {line: "Get help now.", button: "Call 911", action: "call911"},
   PlaceHands: {line: "Push here.", button: null, action: null},
   Compress: {line: "Push hard and fast.", button: null, action: null},
-  SendForAED: {line: "AED, 40 m. Send someone.", button: "Sent", action: "sent"},
+  // Bystander effect: a crowd asked to "send someone" waits; one named person moves.
+  SendForAED: {line: "AED, 40 m.\nPoint at one person.", button: "Sent", action: "sent"},
   Swap: {line: "Switch with a helper\nif you can.", button: "Swapped", action: "swapped"},
   AEDArrives: {line: "The AED is here.\nPads go here.", button: null, action: null},
   StandClear: {line: "Stand clear.", button: null, action: null},
@@ -146,7 +147,7 @@ export const DISPATCHER_LINES: Record<DispatcherCue, string> = {
   connected: "911. I'm with you, and I can see what you see.",
   placeHands: "Put the heel of your hand on the center of their chest.",
   firstCompression: "Good. Push hard and fast, with the beat.",
-  aedPrompt: "Point at someone and send them for the AED.",
+  aedPrompt: "Don't ask the crowd. Point at one person and say: you, get the AED.",
   sent: "Help is on the way. Keep going.",
   swap: "If someone can take over, switch now. Keep the rhythm.",
   aedArrives: "The AED will guide the shock. Pads go where shown.",

@@ -16,16 +16,17 @@ Existing AR CPR projects grade technique on a mannequin in a classroom. Nobody d
 
 ## What it does
 
-Someone is one spatial moment, done carefully. You kneel by the person. A target glows on the center of their chest at real size, and a ring around it pulses at 110 per minute with a soft beat that comes from the chest itself. Your hands push on the chest; on glasses, hand tracking counts each stroke. Every push is scored: the ring turns mint between 100 and 120 per minute and says "Faster." or "Slower." when you drift.
+Someone is one spatial moment, done carefully. You kneel by the person. A target glows on the center of their chest at real size, and a ring around it pulses at 110 per minute with a soft beat that comes from the chest itself. Your hands push on the chest; on glasses, hand tracking counts each stroke. The chest gives a little under every push, and one ring travels out from your hands per push, colored by your pace. Every push is scored: the ring turns mint between 100 and 120 per minute and says "Faster." or "Slower." when you drift.
 
 Around that moment, a short story keeps you moving, one instruction at a time:
 
+- **Seen from afar.** A thin coral ring on the ground marks the person from across the plaza, and fades once your hands are on the chest.
 - **Check and call.** "Tap their shoulder. Are they breathing?" Then one big "Call 911" button.
-- **The dispatcher sees what you see.** A badge reads "Dispatcher connected, viewing" and a calm scripted voice coaches you, with captions for every line.
+- **The dispatcher sees what you see.** Mint viewfinder corners flash once around your view, a badge reads "Dispatcher connected, viewing", and a calm scripted voice coaches you, with captions for every line.
 - **AED wayfinding, against the bystander effect.** At 1:30 a chime comes from one side and an amber chevron points out of view: "AED, 40 m. Point at one person." The dispatcher: "Don't ask the crowd. Point at one person and say: you, get the AED." A crowd asked to "send someone" waits; one named person moves.
 - **Rescuer swap.** At 2:00: "Switch with a helper if you can." Scoring pauses for the handoff.
 - **The AED.** Pads appear on the chest, "Stand clear.", the AED delivers a simulated shock, and you resume.
-- **Replay.** When help arrives, one line first: *You did not freeze.* Then four numbers: compressions, % on pace, best streak, time to first push.
+- **Replay.** When help arrives, one line first: *You did not freeze.* Then four numbers that count up: compressions, % on pace, best streak, time to first push.
 
 ## Why it belongs on glasses
 
@@ -34,7 +35,7 @@ CPR needs both hands and your eyes on the person. A phone has to be put down, an
 ## Design
 
 - **One instruction at a time.** Panic shrinks attention, so only one card is ever visible. Timed prompts that fire while you owe a pinch wait in line behind it.
-- **Attached to the task.** Target and ring on the sternum of a real-scale sculpted manikin, the card 30 cm above the chest so words and hands share one glance, the clock small and low in the view, never in the center. Everything fits the 32 by 37 degree Specs view.
+- **Attached to the task.** Target and ring on the sternum of a real-scale human figure, the card 30 cm above the chest so words and hands share one glance, the clock small and low in the view, never in the center. Everything fits the 32 by 37 degree Specs view.
 - **Hands push, nothing to hold.** On glasses, tracked palms on the chest count each stroke, and the target brightens when your hands are in place. No pinching mid-CPR.
 - **Out of view, but not out of mind.** The AED is behind you, so it gets a directional chime and an edge arrow, not another panel.
 - **Built for an additive display.** Black renders transparent on SPECS, so there are no dark panels. Four colors only: coral for the pulse, mint for on pace, amber for caution, warm white for text.
@@ -46,7 +47,7 @@ See the architecture diagram in the README. In short: plan-lens wrote the brief,
 
 - **Planned with `plan-lens`.** The skill interviewed us one question at a time and produced an approved design brief with five done criteria, each checkable in the preview.
 - **Built through CLAD and the Lens Studio MCP.** Claude Code with CLAD wrote every TypeScript component, wired the scene and imported assets through the MCP in Lens Studio 5.24.1. It recompiled, read runtime logs, walked each beat from the user's eye with simulated pinches and screenshots, and fixed what it saw: a pace ring that rendered as a filled disc, a clock outside the view, an AED arrow painted over by the figure, a clipped replay, dispatcher lines cut mid-sentence.
-- **Tools, from scripts.** The manikin is modeled in Blender from a script; the ring and chevron are runtime meshes in centimetres; sound effects are synthesized; the dispatcher voice is Kokoro-82M text to speech.
+- **Tools, from scripts.** The person is assembled in Blender by a script from CC0 MakeHuman assets, with a blend shape so the chest gives under each push; the ring and chevron are runtime meshes in centimetres; sound effects are synthesized; the dispatcher voice is Kokoro-82M text to speech.
 - **Hand-tracked compressions.** A stroke detector reads both tracked palms near the sternum: a 2 cm push counts and a 1.5 cm recoil re-arms, so a resting or trembling hand never counts.
 - **One source of truth.** A pure-logic rescue state machine drives every view. A compression tracker computes a rolling rate from the last five intervals; a stats module feeds the replay.
 - **Tested with LEAF.** Eight scenarios pass in the preview, including the whole rescue end to end: one per done criterion (target starts compressions, rate bands, one card at a time, AED prompt and dismissal, replay accuracy), plus hand-tracked strokes and the flow rules (dispatcher never cut or stale, prompts queue behind each other, the swap pauses scoring).
@@ -56,7 +57,7 @@ See the architecture diagram in the README. In short: plan-lens wrote the brief,
 
 The preview cannot recognize a real person, read real hand pushes or place a real call, so:
 
-- A sculpted manikin stands in for the person, and the Lens assumes recognition already happened.
+- A realistic CC0 human figure stands in for the person, and the Lens assumes recognition already happened.
 - In the preview the mouse is one pinching hand, so a pinch on the target stands in for a push. On glasses, tracked hands count pushes (logic proven by LEAF and the preview's simulated palm, feel unproven). Depth is never measured or claimed.
 - The dispatcher (Kokoro text to speech with captions), the AED, the helper and the shock are scripted.
 
@@ -66,7 +67,7 @@ The preview cannot recognize a real person, read real hand pushes or place a rea
 - **Standing versus kneeling.** The card has to stay in the same glance as the hands at any head height, so it eases between heights instead of sitting at a fixed one.
 - **Timers versus pinches.** AED and swap prompts run on the clock but must never stack, which needed a small queue in the state machine.
 - **A dispatcher that keeps up.** Queued voice lines were cut mid-sentence, then read after the moment had passed. Now each line finishes, and only the newest waiting line is spoken.
-- **Restraint.** We built extra effects along the way (floor perimeter, holographic hands, ripples) and removed them. Each one competed with the single instruction that matters.
+- **Restraint.** We built extra effects along the way (a floor perimeter, holographic hands, constantly pulsing markers) and removed them. Each one competed with the single instruction that matters. What stayed has a job: the floor ring only marks the person until you start, and the push ripple fires once per push, colored by your pace.
 
 ## Accomplishments that we're proud of
 

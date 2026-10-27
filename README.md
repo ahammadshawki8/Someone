@@ -42,20 +42,20 @@ One spatial moment carries the Lens: you kneel by the person, a target glows on 
 
 The flow, one instruction at a time:
 
-1. "Someone collapsed." Pinch **I see someone**.
+1. "Someone collapsed." A thin coral ring on the ground marks the person from across the plaza, so you know where to go. Pinch **I see someone**.
 2. "Tap their shoulder. Are they breathing?" Pinch **Not breathing**.
-3. Pinch **Call 911**. A badge reads "Dispatcher connected, viewing", and a calm scripted dispatcher speaks with captions.
-4. "Push here." Put your hands on the chest and push. On glasses, hand tracking counts each push stroke (in the preview, a pinch on the target stands in for a push). The target brightens when your palms are on the chest. The ring turns mint at 100 to 120 per minute and shows "Faster." or "Slower." when you drift.
+3. Pinch **Call 911**. A badge reads "Dispatcher connected, viewing", mint viewfinder corners flash once around your view (the dispatcher now sees what you see), and a calm scripted dispatcher speaks with captions.
+4. "Push here." Put your hands on the chest and push. On glasses, hand tracking counts each push stroke (in the preview, a pinch on the target stands in for a push). The target brightens when your palms are on the chest, the chest gives a little under every push, and one ring travels out from your hands per push, colored by your pace. The floor ring fades away: now the chest holds the attention. The pace ring turns mint at 100 to 120 per minute and shows "Faster." or "Slower." when you drift.
 5. At 1:30, a chime from the side and an amber chevron at the edge of view: "AED, 40 m. Point at one person." The dispatcher adds: "Don't ask the crowd. Point at one person and say: you, get the AED." A crowd asked to "send someone" waits; one named person moves. That is the bystander effect, designed against. Pinch **Sent**.
 6. At 2:00: "Switch with a helper if you can." The ring hides until you pinch **Swapped**.
 7. The AED arrives: pads show on the chest, "Stand clear.", the AED delivers a simulated shock, and you resume compressions.
-8. "Help is here." A calm replay leads with one line, *You did not freeze.*, then four numbers: compressions, % on pace, best streak and time to first push.
+8. "Help is here." A calm replay leads with one line, *You did not freeze.*, then four numbers that count up as it settles: compressions, % on pace, best streak and time to first push.
 
 A small clock low in the left of the view shows time since collapse. Timed prompts that fire while another prompt is waiting queue behind it, so there is never more than one card. A demo-mode flag shortens the timers so the full run fits in a video.
 
 ## Stand-ins (what the preview cannot show)
 
-- **The person** is a sculpted, real-scale manikin on the floor. Real glasses would need to recognize a real person and find the chest; the Lens assumes that recognition already happened and places the target on the sternum.
+- **The person** is a realistic, real-scale human figure on the floor (built from CC0 MakeHuman assets). Real glasses would need to recognize a real person and find the chest; the Lens assumes that recognition already happened and places the target on the sternum.
 - **A compression** is counted from tracked hands on glasses (`SomeoneHandCompression` + `SomeoneStrokeDetector`: a 2 cm push counts, a 1.5 cm recoil re-arms). The preview mouse is one pinching hand, so a pinch on the target stands in for a push there. This path is logic proven (LEAF feeds synthetic strokes, and the preview's simulated palm drives it live) and feel unproven. Depth is never measured or claimed.
 - **The 911 dispatcher** is scripted voice lines (Kokoro-82M text to speech) with captions. There is no real call and no real video share.
 - **The AED, the helper and the shock** are scripted on timers.
@@ -66,7 +66,7 @@ Calm, clinical, the opposite of an alarm. The SPECS display is additive (black r
 
 - Four colors only: pulse coral `#FF5A4E` (ring and target), on-pace mint `#5CF2B5`, caution amber `#FFC24D`, warm white `#F7F5F2` text.
 - One typeface, large, sentence case, short verbs ("Push here.", "Faster.").
-- Slow 300 to 500 ms fades. The ring pulse is the only rhythmic motion.
+- Slow 300 to 500 ms fades. The ring pulse is the only rhythmic motion; the push ripple fires once per push, never on a loop.
 - Content sits 0.6 to 1.6 m away and below eye level, clustered around the chest. The card floats about 30 cm above the chest so hands and words share one glance.
 
 ## Architecture: how Snap's tools built and run Someone
@@ -108,7 +108,7 @@ flowchart LR
 1. **Planned with `plan-lens`.** The skill interviewed the owner one question at a time and wrote [`devpost/design-brief.md`](devpost/design-brief.md) (status: approved) with five done criteria.
 2. **Built by a coding agent through CLAD and the Lens Studio MCP.** Claude Code with the CLAD plugin wrote every TypeScript component, wired the scene, imported assets and drove the preview through the Lens Studio MCP in Lens Studio 5.24.1: `RecompileTypeScriptTool` and `RunAndCollectLogsTool` after every change, `ExecuteEditorCode` and `scene-graphql` for scene edits, `PreviewInteractTool` and `CapturePanelScreenshotTool` to walk each beat from the user's eye, and `run_leaf_scenario` for tests. The agent looked at every beat, found problems (a pace ring that rendered as a filled disc, a clock outside the 32 degree view, an AED arrow painted over by the figure, a replay clipped at the top, dispatcher lines cut mid-sentence) and fixed them in the loop.
 3. **Tested with LEAF.** Eight LEAF scenarios in `Someone/Assets/Scripts/Tests/` drive real SIK pinches in the preview: one per done criterion, plus hand-tracked compressions, the flow rules, and the whole rescue end to end in demo mode (`DemoRunScenario.ts`, also used to record the demo video).
-4. **Assets made by tools, from scripts.** The manikin is modeled in Blender by `tools/blender/build_manikin.py`, the pace ring and AED chevron are flat meshes built at runtime in centimetres, sound effects are synthesized (`tools/gen_sfx_someone.js`), and the dispatcher voice is generated with Kokoro-82M (`tools/kokoro/gen_dispatcher.mjs`).
+4. **Assets made by tools, from scripts.** The person is built in Blender from CC0 MakeHuman assets by `tools/blender/build_human.py` (with a `Compress` blend shape so the chest gives under each push), the pace ring and AED chevron are flat meshes built at runtime in centimetres, sound effects are synthesized (`tools/gen_sfx_someone.js`), and the dispatcher voice is generated with Kokoro-82M (`tools/kokoro/gen_dispatcher.mjs`).
 
 | # | Done criterion | Scenario |
 |---|---|---|
@@ -144,8 +144,10 @@ Architecture: one pure-logic state machine (`SomeoneRescueStateMachine`) is the 
 - Spectacles Interaction Kit and Spectacles UI Kit (Snap).
 - LEAF testing packages (Snap).
 - Lens Studio SPECS Base Template.
+- Person: MakeHuman base mesh, clothes, hair and eyes (CC0) through the MPFB 2 Blender add-on; posed, recolored (logo painted out) and given a chest blend shape by our script.
+- Preview environment: Lens Studio's built-in Sunlit Outdoor interactive scene.
 - Dispatcher voice: Kokoro-82M text to speech (Apache 2.0), voice `af_heart`, via `kokoro-js`.
-- Everything else (scripts, manikin, meshes, materials, sound effects, copy) was made for this project during the submission period. Sound effects were synthesized locally (`tools/gen_sfx_someone.js`); the manikin is generated by `tools/blender/build_manikin.py`.
+- Everything else (scripts, meshes, materials, sound effects, copy) was made for this project during the submission period. Sound effects were synthesized locally (`tools/gen_sfx_someone.js`); the human is assembled by `tools/blender/build_human.py`.
 
 ## What we learned
 

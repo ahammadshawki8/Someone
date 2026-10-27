@@ -1,0 +1,76 @@
+- !<AssetImportMetadata/f920777b-a2f5-41b6-a38d-a0c2a7b0ec38>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> d30e477e-21f5-4e40-984a-f05fd3768afb
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> d30e477e-21f5-4e40-984a-f05fd3768afb
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> dc0a1776-6795-4020-8b8b-23352efe47fc
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/dc0a1776-6795-4020-8b8b-23352efe47fc>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: b316efef-343d-43ab-8827-cb54cbf01023
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    cameraObject: false
+    holdWide: false
+    kneelEye: false
+    kneelLook: false
+    kneelSeconds: false
+    standEye: false
+    standLook: false
+    startDelay: false
+    walkSeconds: false
+    wideEye: false
+    wideLook: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - cameraObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      startDelay: 2.500000
+      holdWide: !<float> 3.000000
+      walkSeconds: !<float> 6.000000
+      kneelSeconds: 2.200000
+      wideEye: !<Vec3> {x: 44.000000, y: 5.000000, z: 470.000000}
+      wideLook: !<Vec3> {x: 44.000000, y: -160.000000, z: -85.000000}
+      standEye: !<Vec3> {x: 8.000000, y: -5.000000, z: 105.000000}
+      standLook: !<Vec3> {x: 14.000000, y: -150.000000, z: -85.000000}
+      kneelEye: !<Vec3> {x: 0.000000, y: -85.000000, z: 0.000000}
+      kneelLook: !<Vec3> {x: 0.000000, y: -120.000000, z: -85.000000}
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input SceneObject cameraObject {"hint":"The scene camera (Camera Object)."}'
+    - '// @input float startDelay = 2.5 {"hint":"Seconds after start before the cut to the wide shot (lets the Lens place the space)."}'
+    - '// @input float holdWide = 3 {"hint":"Seconds to hold the wide shot."}'
+    - '// @input float walkSeconds = 6 {"hint":"Seconds for the walk in."}'
+    - '// @input float kneelSeconds = 2.2 {"hint":"Seconds to kneel."}'
+    - "// @input vec3 wideEye = {44,5,470}"
+    - "// @input vec3 wideLook = {44,-160,-85}"
+    - "// @input vec3 standEye = {8,-5,105}"
+    - "// @input vec3 standLook = {14,-150,-85}"
+    - "// @input vec3 kneelEye = {0,-85,0}"
+    - "// @input vec3 kneelLook = {0,-120,-85}"

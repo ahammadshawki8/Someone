@@ -1,0 +1,51 @@
+- !<AssetImportMetadata/7b6f14c3-a31c-4263-bc20-e8d050f59cb2>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 792abc3b-ed53-441c-991b-e4c1e452e7c8
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 792abc3b-ed53-441c-991b-e4c1e452e7c8
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 1a67ab5c-299a-4a14-8c7c-f295215f3498
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/1a67ab5c-299a-4a14-8c7c-f295215f3498>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 8dcd65f5-d7f4-41f0-8ace-d2d19203fb74
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    figureRoot: false
+    strength: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - figureRoot: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      strength: 0.850000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">SomeoneVictimReaction - chest gives under each push</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @input SceneObject figureRoot {"hint":"Root of the figure. Every mesh under it with a Compress blend shape reacts."}'
+    - '// @input float strength = 0.85 {"hint":"How far the chest gives, 0 to 1 of the baked shape.", "widget":"slider", "min":0, "max":1, "step":0.05}'

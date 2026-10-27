@@ -39,6 +39,8 @@ import {RescueEvent, SomeoneRescueStateMachine} from "./SomeoneRescueStateMachin
 import {SomeoneReplayUI} from "./SomeoneReplayUI"
 import {SomeoneGlancePlacer} from "./SomeoneGlancePlacer"
 import {SomeoneHandCompression} from "./SomeoneHandCompression"
+import {SomeoneVictimReaction} from "./SomeoneVictimReaction"
+import {SomeoneViewShareCue} from "./SomeoneViewShareCue"
 
 const TAP_SOUND = requireAsset("../GeneratedSFX/SomeoneTapConfirm.wav") as AudioTrackAsset
 const CONNECT_SOUND = requireAsset("../GeneratedSFX/SomeoneDispatcherConnect.wav") as AudioTrackAsset
@@ -87,6 +89,14 @@ export class SomeoneMain extends BaseScriptComponent {
   @allowUndefined
   @hint("Hand-tracked compressions (real glasses). Pinching the target stays the preview stand-in.")
   handCompression: SomeoneHandCompression
+  @input
+  @allowUndefined
+  @hint("The person's chest gives under each push (stand-in figure).")
+  victimReaction: SomeoneVictimReaction
+  @input
+  @allowUndefined
+  @hint("Viewfinder corners that show the dispatcher now sees your view.")
+  viewShare: SomeoneViewShareCue
   @ui.group_end
 
   @ui.separator
@@ -195,7 +205,9 @@ export class SomeoneMain extends BaseScriptComponent {
 
   /** One push on the chest, from a pinch (preview) or the tracked hands (glasses). */
   private onChestPush(): void {
-    if (this.sm.chestPinched(getTime())) this.chestTarget.pressFeedback()
+    if (!this.sm.chestPinched(getTime())) return
+    this.chestTarget.pressFeedback()
+    if (this.victimReaction) this.victimReaction.push()
   }
 
   // ---- State machine -> views --------------------------------------------------
@@ -213,6 +225,7 @@ export class SomeoneMain extends BaseScriptComponent {
         break
       case "dispatcherConnected":
         this.play(this.connectAudio)
+        if (this.viewShare) this.viewShare.flash()
         break
       case "dispatcherCue":
         this.dispatcher.say(e.cue)
@@ -431,6 +444,9 @@ export class SomeoneMain extends BaseScriptComponent {
   }
   get isDemoMode(): boolean {
     return this.demoMode
+  }
+  get isViewShareShowing(): boolean {
+    return this.viewShare ? this.viewShare.isShowing : false
   }
 
   /** Test hook: jump the collapse clock forward (timed prompts fire normally). */

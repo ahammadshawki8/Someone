@@ -1,0 +1,57 @@
+- !<AssetImportMetadata/4cc41905-c7f3-4a76-9754-9b5c9bc90b17>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 037aea37-e743-43ec-af54-a0cf3f439175
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 037aea37-e743-43ec-af54-a0cf3f439175
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> f713418f-7aed-4a41-93c1-9a37bb86f1e1
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/f713418f-7aed-4a41-93c1-9a37bb86f1e1>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 2ee12628-6ed8-4c9c-bac2-89ea62244a4b
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    distanceCm: false
+    frameSizeCm: false
+    holdSeconds: false
+    material: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - material: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      distanceCm: !<float> 60.000000
+      frameSizeCm: !<Vec2> {x: 27.000000, y: 31.000000}
+      holdSeconds: 2.250000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">SomeoneViewShareCue - \"the dispatcher sees your view\"</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - "// @input Asset.Material material {\"hint\":\"Unlit material that honors alpha (the ring's material works).\"}"
+    - '// @input float distanceCm = 60 {"hint":"Distance of the frame in front of the eyes, in cm.", "widget":"slider", "min":40, "max":100, "step":1}'
+    - '// @input vec2 frameSizeCm = {27,31} {"hint":"Frame width and height in cm (keep inside the 32 by 37 degree display)."}'
+    - '// @input float holdSeconds = 2.25 {"hint":"Seconds the frame holds before fading.", "widget":"slider", "min":1, "max":4, "step":0.25}'

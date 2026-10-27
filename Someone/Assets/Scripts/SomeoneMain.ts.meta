@@ -45,6 +45,8 @@
     rateCue: false
     replay: false
     rescueSpace: false
+    victimReaction: false
+    viewShare: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -66,6 +68,8 @@
       aedPads: !<MappingBased.AssignableType_9> 00000000-0000-0000-0000-000000000000
       dispatcher: !<MappingBased.AssignableType_10> 00000000-0000-0000-0000-000000000000
       handCompression: !<MappingBased.AssignableType_11> 00000000-0000-0000-0000-000000000000
+      victimReaction: !<MappingBased.AssignableType_12> 00000000-0000-0000-0000-000000000000
+      viewShare: !<MappingBased.AssignableType_13> 00000000-0000-0000-0000-000000000000
       demoMode: false
       placeInFrontOfUser: true
       chestDistanceCm: !<float> 85.000000
@@ -91,6 +95,8 @@
     - '// @input AssignableType_9 aedPads {"hint":"AED pad placement overlay."}'
     - '// @input AssignableType_10 dispatcher {"hint":"Scripted dispatcher captions (stand-in)."}'
     - '// @input AssignableType_11 handCompression {"hint":"Hand-tracked compressions (real glasses). Pinching the target stays the preview stand-in."}'
+    - "// @input AssignableType_12 victimReaction {\"hint\":\"The person's chest gives under each push (stand-in figure).\"}"
+    - '// @input AssignableType_13 viewShare {"hint":"Viewfinder corners that show the dispatcher now sees your view."}'
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'

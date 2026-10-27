@@ -11,7 +11,7 @@ That is **Someone**: a Snap Specs Lens that turns a frozen bystander into **the 
 
 ![Compressions: a target on the chest, a pace ring that turns mint on pace, one ripple per push](media/gif-compress.gif)
 
-**Watch the 3-minute film:** [YouTube](YOUTUBE_LINK) · **Source, tests and docs:** [GitHub](https://github.com/ahammadshawki8/Someone)
+**Watch the 3-minute film:** [YouTube](https://www.youtube.com/watch?v=DGrxhbs6_Fk) · **Source, tests and docs:** [GitHub](https://github.com/ahammadshawki8/Someone)
 
 ![The problem in numbers](media/poster-problem.png)
 
@@ -172,6 +172,8 @@ We built Someone the way this hackathon is meant to be built: **planned with pla
   - the film shows the real Lens running end to end, from the first step across the plaza to "You did not freeze."
 
 **In a crowd, everyone waits. Be the someone who moves first.**
+
+**Try it yourself:** open `Someone/Someone.esproj` in Lens Studio 5.24 or later from our [GitHub repo](https://github.com/ahammadshawki8/Someone), choose Interactive Preview, and run the eight LEAF scenarios from the LEAF panel. **Watch the film:** [youtube.com/watch?v=DGrxhbs6_Fk](https://www.youtube.com/watch?v=DGrxhbs6_Fk)
 
 ## References
 

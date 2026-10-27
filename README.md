@@ -4,6 +4,8 @@
 
 When someone collapses, most people freeze. Someone is a Snap SPECS Lens that guides you through CPR, hands-free, one calm step at a time, with 911 seeing what you see.
 
+**Watch the film:** [youtube.com/watch?v=DGrxhbs6_Fk](https://www.youtube.com/watch?v=DGrxhbs6_Fk)
+
 Built for the Devpost "Learn AR with SPECS" hackathon. Planned with the `plan-lens` skill, built by a coding agent through CLAD and the Lens Studio MCP, and checked with LEAF tests in the Lens Studio preview.
 
 | | |

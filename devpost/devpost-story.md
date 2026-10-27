@@ -3,13 +3,11 @@
 **You are crossing a busy plaza. A man in front of you drops to the ground. Forty people stop. Forty people look at each other. Every one of them is waiting for someone.**
 
 - **The clock has already started.** His chance of survival falls by about 10% for every minute without CPR and defibrillation, and help is still minutes away.
-- **Knowing CPR is not enough.** In a study of 684 cardiac arrest bystanders, the most common reason CPR-trained people did not help was simple: **37.5% said they panicked** (Swor et al., 2006).
-- **Crowds make it worse.** Darley and Latané (1968) showed that the more people who witness an emergency, the less likely any one of them is to step in. Responsibility spreads thin, and everyone waits for "someone".
+- **Knowing CPR is not enough.** In a study of 684 cardiac arrest bystanders, the most common reason CPR-trained people did not help was simple: **37.5% said they panicked** ([Swor et al., 2006](https://doi.org/10.1197/j.aem.2005.12.021)).
+- **Crowds make it worse.** [Darley and Latané (1968)](https://doi.org/10.1037/h0025589) showed that the more people who witness an emergency, the less likely any one of them is to step in. Responsibility spreads thin, and everyone waits for "someone".
 - **So we asked a different question.** Not "how do we teach CPR?", but: *what if, in the exact second you freeze, a calm voice and a clear guide appeared right where your hands need to go?*
 
 That is **Someone**: a Snap Specs Lens that turns a frozen bystander into **the someone who moves first**.
-
-![Compressions: a target on the chest, a pace ring that turns mint on pace, one ripple per push](media/gif-compress.gif)
 
 **Watch the 3-minute film:** [YouTube](https://www.youtube.com/watch?v=DGrxhbs6_Fk) · **Source, tests and docs:** [GitHub](https://github.com/ahammadshawki8/Someone)
 
@@ -32,6 +30,9 @@ Someone guides you through a cardiac arrest **hands-free, one calm instruction a
   - A pace ring pulses at **110 beats per minute**, with a soft metronome that plays *from the chest itself* (spatial audio).
   - Every push is scored live: the ring turns **mint between 100 and 120 per minute** and says "Faster." or "Slower." when you drift.
   - The chest gives a little under each push, and one ring ripples out from your hands, coloured by your pace.
+
+![Compressions: a target on the chest, a pace ring that turns mint on pace, one ripple per push](media/gif-compress.gif)
+
 - **AED wayfinding, designed against the bystander effect.** At 1:30, a chime sounds from the side and an amber chevron points out of view: **"AED, 40 m. Point at one person."** The dispatcher adds: *"Don't ask the crowd. Point at one person and say: you, get the AED."* A crowd asked to "send someone" waits. One named person moves.
 
 ![AED wayfinding: a chime, an arrow, and "Point at one person"](media/gif-aed.gif)
@@ -46,7 +47,7 @@ Someone guides you through a cardiac arrest **hands-free, one calm instruction a
 
 ## Design
 
-Design comes first in this project, because in a panic, design is the product. Every rule below follows Snap's spatial design guidelines for Specs.
+Design comes first in this project, because in a panic, design is the product. Every rule below follows [Snap's spatial design guidelines](https://developers.snap.com/spectacles/best-practices/design-for-spectacles/introduction-to-spatial-design) for Specs.
 
 - **One instruction at a time.** Panic shrinks attention, so only one card is ever on screen. A LEAF test checks this across the whole rescue.
 - **Information sits on the thing it describes.** The target and ring are on the sternum. The card floats about 30 cm above the chest, so your words and your hands share one glance.
@@ -73,12 +74,12 @@ Every design decision in Someone traces back to a published finding.
 
 ![Every design decision traces back to a study](media/poster-research.png)
 
-- **Panic is the barrier** (Swor 2006). So: **one instruction at a time**.
-- **Crowds spread responsibility thin** (Darley and Latané 1968). So: **point at one person**, never "send someone".
-- **Video-guided dispatch is linked to higher survival:** 14.3% vs 8.9% with audio alone (Lee 2020). So: **the dispatcher sees your view**.
-- **Real-time AR feedback improves CPR** over no feedback (Cheng 2024). So: **a pace ring that scores every push**.
-- **Survival depends on how fast CPR starts:** bystander CPR gives an OR of 1.72 across 253,247 arrests (Chen 2025). So: **the replay measures time to first push**.
-- **Where we fit:** existing AR CPR work trains technique or detects injuries (Cheng 2024, Sun 2024, Abo-Zahhad 2025). We found no work that designs for **the freeze itself**. That is the gap Someone fills.
+- **Panic is the barrier** ([Swor 2006](https://doi.org/10.1197/j.aem.2005.12.021)). So: **one instruction at a time**.
+- **Crowds spread responsibility thin** ([Darley and Latané 1968](https://doi.org/10.1037/h0025589)). So: **point at one person**, never "send someone".
+- **Video-guided dispatch is linked to higher survival:** 14.3% vs 8.9% with audio alone ([Lee 2020](https://doi.org/10.1016/j.resuscitation.2019.12.004)). So: **the dispatcher sees your view**.
+- **Real-time AR feedback improves CPR** over no feedback ([Cheng 2024](https://doi.org/10.1016/j.resplu.2024.100643)). So: **a pace ring that scores every push**.
+- **Survival depends on how fast CPR starts:** bystander CPR gives an OR of 1.72 across 253,247 arrests ([Chen 2025](https://doi.org/10.1155/emmi/5591055)). So: **the replay measures time to first push**.
+- **Where we fit:** existing AR CPR work trains technique or detects injuries ([Cheng 2024](https://doi.org/10.1016/j.resplu.2024.100643), [Sun 2024](https://doi.org/10.1186/s12909-024-05720-8), [Abo-Zahhad 2025](https://doi.org/10.1186/s13040-025-00473-6)). We found no work that designs for **the freeze itself**. That is the gap Someone fills.
 
 ## How we built it
 
@@ -177,13 +178,13 @@ We built Someone the way this hackathon is meant to be built: **planned with pla
 
 ## References
 
-1. Swor R, Khan I, Domeier R, Honeycutt L, Chu K, Compton S. CPR training and CPR performance: do CPR-trained bystanders perform CPR? *Acad Emerg Med.* 2006;13(6):596-601. doi:10.1197/j.aem.2005.12.021
-2. Darley JM, Latané B. Bystander intervention in emergencies: diffusion of responsibility. *J Pers Soc Psychol.* 1968;8(4):377-383. doi:10.1037/h0025589
-3. Lee SY, Song KJ, Shin SD, et al. Comparison of the effects of audio-instructed and video-instructed dispatcher-assisted cardiopulmonary resuscitation on resuscitation outcomes after out-of-hospital cardiac arrest. *Resuscitation.* 2020. doi:10.1016/j.resuscitation.2019.12.004
-4. Cheng A, Fijacko N, Lockey A, et al. Use of augmented and virtual reality in resuscitation training: a systematic review. *Resusc Plus.* 2024. doi:10.1016/j.resplu.2024.100643
-5. Chen X, Zou Z, Wen X, Li L, Liang Y. The role of bystander cardiopulmonary resuscitation: a meta-analysis. *Emerg Med Int.* 2025. doi:10.1155/emmi/5591055
-6. Sun R, Wang Y, Wu Q, et al. Effectiveness of virtual and augmented reality for cardiopulmonary resuscitation training: a systematic review and meta-analysis. *BMC Med Educ.* 2024. doi:10.1186/s12909-024-05720-8
-7. Abo-Zahhad M, et al. Development of an AI-powered AR glasses system for real-time first aid guidance in emergency situations. *BioData Min.* 2025. doi:10.1186/s13040-025-00473-6
-8. American Heart Association. 2025 Guidelines for CPR and Emergency Cardiovascular Care (CARES 2024 data: about 263,700 EMS-treated cardiac arrests, 10.5% survival to discharge, 41.7% bystander CPR). https://cpr.heart.org/en/resuscitation-science/cpr-and-ecc-guidelines
-9. American Red Cross. CPR facts and statistics. https://www.redcross.org/take-a-class/resources/articles/cpr-facts-and-statistics
-10. Snap Inc. Introduction to spatial design for Spectacles. https://developers.snap.com/spectacles/best-practices/design-for-spectacles/introduction-to-spatial-design
+1. Swor R, Khan I, Domeier R, Honeycutt L, Chu K, Compton S. CPR training and CPR performance: do CPR-trained bystanders perform CPR? *Acad Emerg Med.* 2006;13(6):596-601. [doi:10.1197/j.aem.2005.12.021](https://doi.org/10.1197/j.aem.2005.12.021)
+2. Darley JM, Latané B. Bystander intervention in emergencies: diffusion of responsibility. *J Pers Soc Psychol.* 1968;8(4):377-383. [doi:10.1037/h0025589](https://doi.org/10.1037/h0025589)
+3. Lee SY, Song KJ, Shin SD, et al. Comparison of the effects of audio-instructed and video-instructed dispatcher-assisted cardiopulmonary resuscitation on resuscitation outcomes after out-of-hospital cardiac arrest. *Resuscitation.* 2020. [doi:10.1016/j.resuscitation.2019.12.004](https://doi.org/10.1016/j.resuscitation.2019.12.004)
+4. Cheng A, Fijacko N, Lockey A, et al. Use of augmented and virtual reality in resuscitation training: a systematic review. *Resusc Plus.* 2024. [doi:10.1016/j.resplu.2024.100643](https://doi.org/10.1016/j.resplu.2024.100643)
+5. Chen X, Zou Z, Wen X, Li L, Liang Y. The role of bystander cardiopulmonary resuscitation: a meta-analysis. *Emerg Med Int.* 2025. [doi:10.1155/emmi/5591055](https://doi.org/10.1155/emmi/5591055)
+6. Sun R, Wang Y, Wu Q, et al. Effectiveness of virtual and augmented reality for cardiopulmonary resuscitation training: a systematic review and meta-analysis. *BMC Med Educ.* 2024. [doi:10.1186/s12909-024-05720-8](https://doi.org/10.1186/s12909-024-05720-8)
+7. Abo-Zahhad M, et al. Development of an AI-powered AR glasses system for real-time first aid guidance in emergency situations. *BioData Min.* 2025. [doi:10.1186/s13040-025-00473-6](https://doi.org/10.1186/s13040-025-00473-6)
+8. American Heart Association. 2025 Guidelines for CPR and Emergency Cardiovascular Care (CARES 2024 data: about 263,700 EMS-treated cardiac arrests, 10.5% survival to discharge, 41.7% bystander CPR). [cpr.heart.org](https://cpr.heart.org/en/resuscitation-science/cpr-and-ecc-guidelines)
+9. American Red Cross. CPR facts and statistics. [www.redcross.org](https://www.redcross.org/take-a-class/resources/articles/cpr-facts-and-statistics)
+10. Snap Inc. Introduction to spatial design for Spectacles. [developers.snap.com](https://developers.snap.com/spectacles/best-practices/design-for-spectacles/introduction-to-spatial-design)

@@ -208,6 +208,7 @@
     textColor: true
     accentColor: true
     fadeSeconds: true
+    dropCm: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -216,6 +217,7 @@
       textColor: !<Vec4> {x: 0.969000, y: 0.961000, z: 0.949000, w: 1.000000}
       accentColor: !<Vec4> {x: 0.361000, y: 0.949000, z: 0.710000, w: 1.000000}
       fadeSeconds: 0.500000
+      dropCm: !<float> 4.000000
   ScriptTypes:
     "":
       {}

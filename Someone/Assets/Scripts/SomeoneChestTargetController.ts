@@ -8,8 +8,8 @@
  * wrapper itself, so one compression = one pinch (one click in preview).
  *
  * Events: onPinch (each accepted pinch while shown)
- * API:    setShown(on), pressFeedback()
- * Getters: isShown, isHovered
+ * API:    setShown(on), pressFeedback(), setHandsOn(on)
+ * Getters: isShown, isHovered, isHandsOn
  *
  * Must not: count compressions or grade rate (state machine owns that).
  */
@@ -58,6 +58,7 @@ export class SomeoneChestTargetController extends BaseScriptComponent {
   private interactable: Interactable
   private shown = false
   private hovered = false
+  private handsOn = false
   private alpha = 0
   private hoverBoost = 0
   private press = 0
@@ -132,9 +133,25 @@ export class SomeoneChestTargetController extends BaseScriptComponent {
     return this.hovered
   }
 
+  /** Tracked palms are on the chest: same calm brightening as an aimed pinch. */
+  setHandsOn(on: boolean): void {
+    if (on === this.handsOn) return
+    this.handsOn = on
+    this.updateBoost()
+  }
+
+  get isHandsOn(): boolean {
+    return this.handsOn
+  }
+
   private setHover(on: boolean): void {
     if (on === this.hovered) return
     this.hovered = on
+    this.updateBoost()
+  }
+
+  private updateBoost(): void {
+    const on = this.hovered || this.handsOn
     const from = this.hoverBoost
     this.tweens.run("hover", 0.3, (t) => {
       this.hoverBoost = from + ((on ? 1 : 0) - from) * t
@@ -144,10 +161,12 @@ export class SomeoneChestTargetController extends BaseScriptComponent {
 
   private apply(): void {
     // Brighter on hover; the visual (not the collider wrapper) scales.
+    // It blooms open as it fades in (0.82 to 1), and closes as it fades out.
     const a = this.alpha * (0.75 + 0.25 * this.hoverBoost)
     this.fade.setAlpha(a)
     if (this.visualRoot) {
-      const s = 1 + 0.06 * this.hoverBoost - 0.05 * this.press
+      const bloom = 0.82 + 0.18 * this.alpha
+      const s = bloom * (1 + 0.06 * this.hoverBoost - 0.05 * this.press)
       this.visualRoot.getTransform().setLocalScale(new vec3(s, s, s))
     }
   }

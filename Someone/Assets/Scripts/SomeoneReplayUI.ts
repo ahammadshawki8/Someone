@@ -1,6 +1,7 @@
 /**
  * SomeoneReplayUI - the calm replay at the very end, in the card's spot,
- * slightly larger. Four stat rows, then "You did not freeze."
+ * slightly larger. "You did not freeze." first, then the evidence: one row
+ * of four big numbers with small labels, then "Start over".
  *
  * A passive view. No panel (additive display). Starts hidden.
  * API (Main -> UI):   showReplay(stats), hideReplay()
@@ -15,7 +16,15 @@ import {FlexAlign, FlexJustify} from "SpectaclesUIKit.lspkg/Scripts/Components/L
 import Event, {PublicApi} from "SpectaclesInteractionKit.lspkg/Utils/Event"
 import {REPLAY_CLOSING} from "./SomeoneConfig"
 import {StatsSnapshot} from "./SomeoneSessionStats"
-import {makeCapsuleButton, makeColumn, makeRow, makeTextItem, setTextAlpha, SomeoneTweens} from "./SomeoneSharedUI"
+import {
+  makeCapsuleButton,
+  makeColumn,
+  makeColumnItem,
+  makeRow,
+  makeTextItem,
+  setTextAlpha,
+  SomeoneTweens
+} from "./SomeoneSharedUI"
 
 @component
 export class SomeoneReplayUI extends BaseScriptComponent {
@@ -42,6 +51,11 @@ export class SomeoneReplayUI extends BaseScriptComponent {
   @hint("Seconds for the reveal fade (design range 0.3 to 0.5).")
   @widget(new SliderWidget(0.3, 0.5, 0.05))
   fadeSeconds: number = 0.5
+
+  @input
+  @hint("How far below the instruction card's spot the replay sits, in cm (keeps the headline in view).")
+  @widget(new SliderWidget(0, 10, 0.5))
+  dropCm: number = 4
   @ui.group_end
 
   private _onRestart = new Event<void>()
@@ -73,18 +87,24 @@ export class SomeoneReplayUI extends BaseScriptComponent {
     this.sceneObject.createComponent("Component.Canvas")
     const content = global.scene.createSceneObject("Content")
     content.setParent(this.sceneObject)
+    // Sit a little lower than the card so the headline stays inside the view.
+    content.getTransform().setLocalPosition(new vec3(0, -this.dropCm, 0))
     const W = this.replayWidthCm
-    const col = makeColumn(content, "ReplayColumn", W, {gap: 0.5, align: FlexAlign.Center})
+    const col = makeColumn(content, "ReplayColumn", W, {gap: 1.4, align: FlexAlign.Center})
 
-    this.totalValue = this.statRow(col.so, col.flex, "Compressions", W)
-    this.paceValue = this.statRow(col.so, col.flex, "On pace", W, true)
-    this.streakValue = this.statRow(col.so, col.flex, "Longest on-pace streak", W)
-    this.firstValue = this.statRow(col.so, col.flex, "First compression", W)
-
+    // The headline first, then the evidence: one row of big numbers.
     this.closing = makeTextItem(col.so, col.flex, "Closing", REPLAY_CLOSING, "Display", W, 5.4, {
-      color: this.accentColor
+      color: this.accentColor,
+      sizeOverride: 120
     })
     this.texts.push({t: this.closing, color: () => this.accentColor})
+
+    const row = makeRow(col.so, col.flex, "StatRow", W, 7.6, FlexJustify.SpaceBetween)
+    const cell = W / 4
+    this.totalValue = this.statCell(row.so, row.flex, "Compressions", cell)
+    this.paceValue = this.statCell(row.so, row.flex, "On pace", cell, true)
+    this.streakValue = this.statCell(row.so, row.flex, "Best streak", cell)
+    this.firstValue = this.statCell(row.so, row.flex, "First push", cell)
 
     const btn = makeCapsuleButton(col.so, col.flex, "StartOver", "Start over", 14, 4.4, this.textColor)
     this.buttonSo = btn.so
@@ -102,18 +122,16 @@ export class SomeoneReplayUI extends BaseScriptComponent {
     this.apply()
   }
 
-  private statRow(parent: SceneObject, parentFlex: FlexLayout, label: string, W: number, accent = false): Text {
-    const row = makeRow(parent, parentFlex, "Row" + label.replace(/ /g, ""), W, 3.6, FlexJustify.SpaceBetween)
-    const l = makeTextItem(row.so, row.flex, "Label", label, "Label", W * 0.66, 3.0, {
-      color: this.labelColor,
-      align: HorizontalAlignment.Left
-    })
-    const v = makeTextItem(row.so, row.flex, "Value", "0", "Value", W * 0.3, 3.0, {
+  /** One stat: a big number with a small label under it. */
+  private statCell(parent: SceneObject, parentFlex: FlexLayout, label: string, w: number, accent = false): Text {
+    const cell = makeColumnItem(parent, parentFlex, "Stat" + label.replace(/ /g, ""), w, 7.6, 0.4)
+    const v = makeTextItem(cell.so, cell.flex, "Value", "0", "Value", w, 4.2, {
       color: accent ? this.accentColor : this.textColor,
-      align: HorizontalAlignment.Right
+      sizeOverride: 96
     })
-    this.texts.push({t: l, color: () => this.labelColor})
+    const l = makeTextItem(cell.so, cell.flex, "Label", label, "Label", w, 2.4, {color: this.labelColor})
     this.texts.push({t: v, color: () => (accent ? this.accentColor : this.textColor)})
+    this.texts.push({t: l, color: () => this.labelColor})
     return v
   }
 

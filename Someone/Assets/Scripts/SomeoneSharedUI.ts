@@ -99,6 +99,34 @@ export function makeRow(
   return {so, flex}
 }
 
+/** A column FlexLayout that is itself a fixed-size item of its parent layout. */
+export function makeColumnItem(
+  parent: SceneObject,
+  parentFlex: FlexLayout,
+  name: string,
+  width: number,
+  height: number,
+  gap: number
+): {so: SceneObject; flex: FlexLayout} {
+  const so = makeObj(parent, name, new vec3(0, 0, LAYOUT_Z_LIFT))
+  const flex = so.createComponent(FlexLayout.getTypeName()) as FlexLayout
+  flex.autoDiscoverItemsOnStart = false // items are registered explicitly via addItems
+  const item = so.createComponent(FlexItem.getTypeName()) as FlexItem
+  item.overrideWidth = width
+  item.overrideHeight = height
+  item.flexShrink = 0
+  flex.onInitialized.add(() => {
+    flex.width = width
+    flex.height = height
+    flex.direction = FlexDirection.Column
+    flex.rowGap = gap
+    flex.justifyContent = FlexJustify.Center
+    flex.alignItems = FlexAlign.Center
+  })
+  parentFlex.addItems([item])
+  return {so, flex}
+}
+
 /**
  * A text cell registered as a fixed-size flex item. The layout sizes its
  * layoutRect to (width x height); wrap lets long lines break inside it.

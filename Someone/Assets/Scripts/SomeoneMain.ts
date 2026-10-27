@@ -190,6 +190,7 @@ export class SomeoneMain extends BaseScriptComponent {
     }
     this.sm.tick(getDeltaTime(), getTime())
     this.clockChip.setTime(this.sm.elapsed)
+    if (this.handCompression) this.chestTarget.setHandsOn(this.handCompression.handsOnChest)
   }
 
   /** One push on the chest, from a pinch (preview) or the tracked hands (glasses). */

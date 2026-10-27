@@ -8,6 +8,7 @@ import {DoneCriterion2Scenario} from "./DoneCriterion2Scenario"
 import {DoneCriterion3Scenario} from "./DoneCriterion3Scenario"
 import {DoneCriterion4Scenario} from "./DoneCriterion4Scenario"
 import {DoneCriterion5Scenario} from "./DoneCriterion5Scenario"
+import {FlowRulesScenario} from "./FlowRulesScenario"
 import {HandCompressionScenario} from "./HandCompressionScenario"
 
 @component
@@ -37,6 +38,10 @@ export class LeafIndex extends BaseScriptComponent {
     {
       id: "hand-compression-scenario",
       typename: HandCompressionScenario.getTypeName(),
+    },
+    {
+      id: "flow-rules-scenario",
+      typename: FlowRulesScenario.getTypeName(),
     },
   ]
 }

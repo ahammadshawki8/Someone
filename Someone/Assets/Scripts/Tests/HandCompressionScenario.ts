@@ -42,6 +42,7 @@ export class HandCompressionScenario extends Scenario {
       await nextFrame()
     }
     expect(main.stateName).toBe("Compress")
+    expect(main.chestTarget.isHandsOn).toBe(true)
     expect(main.compressionCount).toBeGreaterThan(7)
     expect(main.ringColorState).toBe("good")
 

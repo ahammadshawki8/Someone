@@ -29,6 +29,7 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     accentColor: false
+    dropCm: false
     fadeSeconds: false
     replayWidthCm: false
     textColor: false
@@ -45,6 +46,7 @@
       textColor: !<Vec4> {x: 0.969000, y: 0.961000, z: 0.949000, w: 1.000000}
       accentColor: !<Vec4> {x: 0.361000, y: 0.949000, z: 0.710000, w: 1.000000}
       fadeSeconds: 0.500000
+      dropCm: !<float> 4.000000
   ScriptTypes:
     -
       {}
@@ -57,4 +59,5 @@
     - '// @input vec4 textColor = "{0.969,0.961,0.949,1}" {"hint":"Text color (warm white #F7F5F2).", "widget":"color"}'
     - '// @input vec4 accentColor = "{0.361,0.949,0.71,1}" {"hint":"Accent for the on-pace value and closing line (mint #5CF2B5).", "widget":"color"}'
     - '// @input float fadeSeconds = 0.5 {"hint":"Seconds for the reveal fade (design range 0.3 to 0.5).", "widget":"slider", "min":0.3, "max":0.5, "step":0.05}'
+    - "// @input float dropCm = 4 {\"hint\":\"How far below the instruction card's spot the replay sits, in cm (keeps the headline in view).\", \"widget\":\"slider\", \"min\":0, \"max\":10, \"step\":0.5}"
     - '// @ui {"widget":"group_end"}'
